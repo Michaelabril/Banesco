@@ -1,0 +1,10 @@
+{
+  "viewportWidth": 1600,
+  "viewportHeight": 1000,
+  "baseUrl": "https://pa-prod-webapp-onboarding-binternacional-qa8c96.azurewebsites.net/",
+  "projectId": "u3d3kj",
+  "retries": {
+    "runMode": 1,
+    "openMode": 0
+    }
+}
