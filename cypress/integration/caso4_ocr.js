@@ -17,12 +17,7 @@ export function OCR(ocr) {
       cy.route("POST", "**/wsvalidatedata").as("validatedata");
     }); //Cierre del beforeEach
 
-    it("Inicio", () => {
-      cy.contains("¡Hola! Soy Dana.");
-    });
-
     it("Ocr", () => {
-      cy.visit("/");
       cy.fixture("index").then((index) => {
         cy.get("[data-test=comencemos_btn]").click();
         cy.wait(7000);
@@ -49,7 +44,7 @@ export function OCR(ocr) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
         });
         cy.wait(30000);
-        cy.screenshot("CapturaOcr");
+        cy.screenshot("Ocr/Ocr", { timeout: 60000 });
         cy.get("[data-test=ocr-unificado-siguiente]").click();
         cy.wait("@Ocr", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -91,8 +86,8 @@ export function OCR(ocr) {
       );
       cy.get(":nth-child(10) > .form-control").clear();
       cy.get(":nth-child(1) > .form-control").click();
-      cy.screenshot("datos_generales_requeridos");
       cy.get("[data-test=generar-contrato-btn]").should("be.disabled");
+      cy.screenshot("Ocr/Campos_requeridos", { timeout: 60000 });
     });
 
     it("Datos generales - Validar campos Nacionalidad y numero de cedula deshabilitados", () => {
@@ -118,7 +113,9 @@ export function OCR(ocr) {
       });
       cy.get(":nth-child(5) > .form-control").should("be.disabled");
       cy.get(":nth-child(6) > .form-control").should("be.disabled");
-      cy.screenshot("datos_generales_Nacionalidad_cedula_requeridos");
+      cy.screenshot("Ocr/datos_generales_Nacionalidad_cedula_requeridos", {
+        timeout: 6000,
+      });
     });
 
     it("Datos generales - Validar escrituras de campos", () => {
@@ -164,11 +161,11 @@ export function OCR(ocr) {
       );
       cy.get("[data-test=situacion-laboral-select]").select("COLOMBIA");
       cy.get(":nth-child(10) > .form-control").type(ocr.datosUsuario.numeroRif);
-      cy.screenshot("datos_generales_campos_validos");
       cy.get("[data-test=generar-contrato-btn]").should(
         "have.class",
         "btnDCLJR"
       );
+      cy.screenshot("Ocr/datos_generales_campos_validos", { timeout: 6000 });
     });
 
     it("Datos generales - Validar regresar al llenar los campos", () => {
@@ -226,7 +223,7 @@ export function OCR(ocr) {
         "¡Muy bien!Ahora verifiquemos que tus datos estén correctos, puedes editarlos si es necesario:"
       );
       cy.wait(3000);
-      cy.screenshot("datos_generales_return");
+      cy.screenshot("Ocr/datos_generales_return", { timeout: 60000 });
     });
 
     it("Datos generales - Validar continuar al llenar los campos", () => {
@@ -288,7 +285,7 @@ export function OCR(ocr) {
       });
       //cy.get('.pb-0').should('have.text', '¡Muy bien!Ahora verifiquemos que tus datos estén correctos, puedes editarlos si es necesario:')
       cy.wait(3000);
-      cy.screenshot("datos_generales_exitoso");
+      cy.screenshot("Ocr/datos_generales_exitoso", { timeout: 60000 });
     });
 
     it("Validar maximo de intentos (6)", () => {
@@ -307,7 +304,6 @@ export function OCR(ocr) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingEmailData.code).to.eq("REMSE3");
         });
-        cy.screenshot("Maximo_6_intentos");
         cy.get(".mTopModal > :nth-child(1) > :nth-child(1)")
           .should(
             "have.text",
@@ -317,6 +313,7 @@ export function OCR(ocr) {
             "include.text",
             "Tendrás estos últimos 6 intentos adicionales para completar tu solicitud."
           );
+        cy.screenshot("Ocr/Maximo_6_intentos", {screenshot:60000});
       });
     });
   });

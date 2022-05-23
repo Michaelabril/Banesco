@@ -1,39 +1,39 @@
-//import {LOGUIN} from "./caso1_loguinValidaciones";
-//import {PROD_TEMPLATES} from "./caso2_templatesProductos.js";
-//import {KOPEP} from "./caso3-koPep_koFampep.JS";
+import {LOGUIN} from "./caso1_loguinValidaciones";
+import {PROD_TEMPLATES} from "./caso2_templatesProductos.js";
+import {KOPEP} from "./caso3-koPep_koFampep.JS";
 import {OCR} from "./caso4_ocr";
-//import {DATOSGENERALES} from "./caso5_datosGenerales.js";
+//import {APPTIVIDAD} from "./caso5_apptividad";
 //import { IntentosBiometria } from "./caso7-BiometriaKO.js";
 //import { KOFATCAPEP } from "./caso4-KOFATCAPEP";
 
 const loguin = {
     datosUsuario: {
-        email: "prueba179@yopmail.com", code: "389629",
+        email: "prueba179@yopmail.com", code: "898588",
         emailfalso: "noemi@correofalso.com"
     }
 };
 
 const Tem_Productos = {
     datosUsuario: {
-        emailSimplificada:"csimplificada@yopmail.com", codesimplificada: "528599",
-        emailAhorro:"cahorro@yopmail.com",codeAhorro: "366986",
-        emailEuros:"ceuros@yopmail.com",codeEuros: "898967",
-        emailCorriente:"ccorriente@yopmail.com",codeCorriente: "268739",
-        emailmultipanama:"cmultipanama@yopmail.com",codemultipanama: "445873",
-        emailmultitular:"cmultititular@yopmail.com",codeMultititular: "549786",
+        emailSimplificada:"csimplificada@yopmail.com", codesimplificada: "588769",
+        emailAhorro:"cahorro@yopmail.com",codeAhorro: "542832",
+        emailEuros:"ceuros@yopmail.com",codeEuros: "877448",
+        emailCorriente:"ccorriente@yopmail.com",codeCorriente: "393728",
+        emailmultipanama:"cmultipanama@yopmail.com",codemultipanama: "942786",
+        emailmultitular:"cmultititular@yopmail.com",codeMultititular: "767859",
     },
 };
 
 const casepep = {
     datosUsuario: {
-        emailfampep:"prueba178@yopmail.com", codefampep: "786764",
-        email:"prueba177@yopmail.com", code: "653468"
+        emailfampep:"prueba178@yopmail.com", codefampep: "323285",
+        email:"prueba177@yopmail.com", code: "269252"
     },
 };
 
 const ocr = {
     datosUsuario: {
-        email:"ocrtest@yopmail.com", code: "929835",
+        email:"ocrtest@yopmail.com", code: "293947",
         nombres:"Michael Alejandro",
         apellidos:"Abril Marmolejo",
         fechaNacimiento:"13061994",
@@ -43,9 +43,9 @@ const ocr = {
     }
 };
 
-const datosGenerales = {
+const apptividad = {
     datosUsuario: {
-        email:"datosgenerales@yopmail.com", code: "653468",
+        email:"apptividad@yopmail.com", code: "653468",
         name:"Michael"
     },
 };
@@ -97,9 +97,9 @@ const Data_generica = {
     }
 };
 var planilla = [Data_generica, casepep]
-//LOGUIN(loguin)
-//PROD_TEMPLATES(Tem_Productos)
-//KOPEP(casepep)
+LOGUIN(loguin)
+PROD_TEMPLATES(Tem_Productos)
+KOPEP(casepep)
 OCR(ocr)
-//DATOSGENERALES(datosGenerales)
+//APPTIVIDAD(apptividad)
 //PLANILLA(planilla)

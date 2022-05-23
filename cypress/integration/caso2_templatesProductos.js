@@ -29,7 +29,6 @@ export function PROD_TEMPLATES(Tem_Productos) {
         })*/
 
         it('Validacion de Template Cuenta ahorro simplificada',()=>{
-            cy.visit('/');
             cy.get('[data-test=comencemos_btn]').click()
             cy.wait(7000);
             cy.get('[data-test=insertar-correo]').click();
@@ -51,9 +50,9 @@ export function PROD_TEMPLATES(Tem_Productos) {
             });
             cy.get('.col-md-7 > .list-group > :nth-child(1) > .fmb-0').should('have.text','Abre tu CUENTA DE AHORROS SIMPLIFICADA en minutos. Más tiempo te tomará preparar el café de la mañana.')
             cy.wait(7000);
+            cy.screenshot("Templates/tsimplificada", { timeout: 60000 });
         })
         it('Validacion de Template Cuenta ahorro',()=>{
-            cy.visit('/');
             cy.get('[data-test=comencemos_btn]').click()
             cy.wait(7000);
             cy.get('[data-test=insertar-correo]').click();
@@ -75,9 +74,9 @@ export function PROD_TEMPLATES(Tem_Productos) {
             });
             cy.get('.col-md-7 > .list-group > :nth-child(1) > .fmb-0').should('have.text','Abre tu CUENTA DE AHORRO en minutos. Más tiempo te tomará preparar el café de la mañana.')
             cy.wait(7000);
+            cy.screenshot("Templates/tahorro", { timeout: 60000 });
         })
         it('Validacion de Template Cuenta ahorro Euros',()=>{
-            cy.visit('/');
             cy.get('[data-test=comencemos_btn]').click()
             cy.wait(7000);
             cy.get('[data-test=insertar-correo]').click();
@@ -99,9 +98,9 @@ export function PROD_TEMPLATES(Tem_Productos) {
             });
             cy.get('.col-md-7 > .list-group > :nth-child(1) > .fmb-0').should('have.text','Abre tu CUENTA DE AHORRO EN EUROS en minutos. Más tiempo te tomará preparar el café de la mañana.')
             cy.wait(7000);
+            cy.screenshot("Templates/teuros", { timeout: 60000 });
         })
         it('Validacion de Template Cuenta ahorro Corriente',()=>{
-            cy.visit('/');
             cy.get('[data-test=comencemos_btn]').click()
             cy.wait(7000);
             cy.get('[data-test=insertar-correo]').click();
@@ -123,9 +122,9 @@ export function PROD_TEMPLATES(Tem_Productos) {
             });
             cy.get('.col-md-7 > .list-group > :nth-child(1) > .fmb-0').should('have.text','Abre tu CUENTA CORRIENTE en minutos. Más tiempo te tomará preparar el café de la mañana.')
             cy.wait(7000);
+            cy.screenshot("Templates/tcorriente", { timeout: 60000 });
         })
         it('Validacion de Template Cuenta ahorro Multipanama',()=>{
-            cy.visit('/');
             cy.get('[data-test=comencemos_btn]').click()
             cy.wait(7000);
             cy.get('[data-test=insertar-correo]').click();
@@ -147,9 +146,9 @@ export function PROD_TEMPLATES(Tem_Productos) {
             });
             cy.get('.col-md-7 > .list-group > :nth-child(1) > .fmb-0').should('have.text','Abre tu CUENTA DE AHORRO MULTIPANAMA en minutos. Más tiempo te tomará preparar el café de la mañana.')
             cy.wait(7000);
+            cy.screenshot("Templates/tmultipanama", { timeout: 60000 });
         })
         it('Validacion de Template Cuenta ahorro Multititular',()=>{
-            cy.visit('/');
             cy.get('[data-test=comencemos_btn]').click()
             cy.wait(7000);
             cy.get('[data-test=insertar-correo]').click();
@@ -171,6 +170,7 @@ export function PROD_TEMPLATES(Tem_Productos) {
             });
             cy.get('.col-md-7 > .list-group > :nth-child(1) > .fmb-0').should('have.text','Abre tu CUENTA DE AHORRO MULTI TITULAR en minutos. Más tiempo te tomará preparar el café de la mañana.')
             cy.wait(7000);
+            cy.screenshot("Templates/tmultititular", { timeout: 60000 });
         }) 
  })
 }
