@@ -1,8 +1,8 @@
-import {LOGUIN} from "./caso1_loguinValidaciones";
+/*import {LOGUIN} from "./caso1_loguinValidaciones";
 import {PROD_TEMPLATES} from "./caso2_templatesProductos.js";
 import {KOPEP} from "./caso3-koPep_koFampep.JS";
-import {OCR} from "./caso4_ocr";
-//import {APPTIVIDAD} from "./caso5_apptividad";
+import {OCR} from "./caso4_ocr";*/
+import {APPTIVIDAD} from "./caso5_apptividad";
 //import { IntentosBiometria } from "./caso7-BiometriaKO.js";
 //import { KOFATCAPEP } from "./caso4-KOFATCAPEP";
 
@@ -45,8 +45,13 @@ const ocr = {
 
 const apptividad = {
     datosUsuario: {
-        email:"apptividad@yopmail.com", code: "653468",
-        name:"Michael"
+        email:"apptividad@yopmail.com", code: "552285",
+        nombres:"Michael Alejandro",
+        apellidos:"Abril Marmolejo",
+        fechaNacimiento:"13061994",
+        fechaexpedicion:"12122020",
+        fechaVencimiento:"12122030",
+        numeroRif:"V-23456756-2"
     },
 };
 
@@ -97,9 +102,9 @@ const Data_generica = {
     }
 };
 var planilla = [Data_generica, casepep]
-LOGUIN(loguin)
+/*LOGUIN(loguin)
 PROD_TEMPLATES(Tem_Productos)
 KOPEP(casepep)
 OCR(ocr)
-//APPTIVIDAD(apptividad)
+*/APPTIVIDAD(apptividad)
 //PLANILLA(planilla)
