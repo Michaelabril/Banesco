@@ -1,4 +1,2 @@
 node_modules
 cypress/videos
-*.y4m
-*.mp4
