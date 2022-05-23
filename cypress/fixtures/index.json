@@ -1,0 +1,11 @@
+{
+    "inputPasswordmain":"#mat-input-0",
+    "btnSiguiente":"#form > .mat-focus-indicator > .mat-button-wrapper",
+    "datefoundationoperation":"#mat-input-2",
+    "dateMainOperation":"#mat-input-3",
+    "CompanyActivity":"#mat-select-value-1",
+    "TypeCompany":"#mat-select-value-5",
+    "IndustryCode":"#mat-select-value-7",
+    "ZonaFrancaOperation":"#mat-select-value-9",
+    "TypeSociety":"#mat-select-value-11"
+}
