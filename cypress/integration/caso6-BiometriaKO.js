@@ -1,255 +1,169 @@
 /// <reference types="Cypress" />
 
-export function IntentosBiometria (userCase) {
+export function BIOMETRIA(biometria) {
+  describe("Onboarding KO por Intentos de biometria", () => {
+    //let secretCode;
+    beforeEach(() => {
+      cy.visit("/");
+      cy.exec("npm cache clear --force");
+      cy.wait(5000);
+      cy.server();
+      //Servicio al insertar email
+      cy.route("POST", "**/wscreatesessionbyemail").as("Sessionid");
+      //Servicio al insertar codigo de sesion
+      cy.route("POST", "**/wsvalidatecodesession").as("ValidateSessionId");
+      //Servicio FATCA y PEP
+      cy.route("POST", "**/wsfatca").as("FatcaPep");
+      // Servicio de OCR
+      cy.route("POST", "**/wsocr").as("Ocr");
+      //servicio de wsvalidatedata
+      cy.route("POST", "**/wsvalidatedata").as("validatedata");
+      // Servicio de apptividad
+      cy.route("POST", "**/wsvalidateapptivity").as("apptividad");
+      // Servicio de biometria
+      cy.route("POST", "**/wsbiometric").as("biometria");
+    }); //Cierre del beforeEach
 
-    describe('Onboarding KO por Intentos de biometria', () => {
-
-        let secretCode 
-        beforeEach(() => {
-            cy.visit('./inicio', { timeout: 30000 });
-            cy.server();
-            //Servicio al insertar email
-            cy.route('POST', '**/wscreatesessionbyemail').as('Sessionid');
-            //Servicio al insertar codigo de sesion 
-            cy.route('POST', '**/wsvalidatecodesession').as('ValidateSessionId')
-            //Servicio FATCA y PEP 
-            cy.route('POST', '**/wsfatca').as('FatcaPep')
-             //Servicio OCR
-            cy.route('POST', '**/wsocr').as('ocr')
-           //Servicio Apptividad
-            cy.route('POST', '**/wsvalidateapptivity').as('apptividad')
-            //Servicio de biometria 
-            cy.route('POST', '**/wsbiometric').as('biometria')
-
-        })
-
-        it('borrado', ()  => {  //Este servicio borra la data antes de iniciar el flujo
-
-            
-            cy.request(
-                "POST",
-                Cypress.env("baseUrlBack") + "wsdatacleaner", 
-                {email: userCase.datosUsuario.email})
-                .then(response => {
-                    cy.log(JSON.stringify(response.body));
-                    expect(response.body.HttpResponse.code).to.eq(200);
-                    //expect(response.body.OnboardingCleanerData.serviceResponse).to.eq(true);
-                })//cierre de wsdatacleaner
-        }),  //cierre de it borrado
-
-        it('caso - primer intento en biometria sin borrar', ()  => {   //Finalidad del caso generar el KO por dos intentos seguidos de biometria 
-        
-        //inicio de la página 
-        cy.get('[data-test=comencemos_btn]' , { timeout: 60000 }).click()
-        
-        //cy.get('[data-test=no-soy-cliente-btn]').click({force:true}).end()
-    
-      
-        cy.get('[data-test=quiero-mi-cuenta-btn]' , { timeout: 60000 }).click()
-        
-        //Insertar el email 
-        cy.get('[data-test=insertar-correo]' , { timeout: 60000 }).type(userCase.datosUsuario.email)
-        
-        cy.get('[data-test="enviar-correo-electronico"]').click()
-        cy.get('[data-test="es-correcto-email"]').click()
-
-
-        //Para que no falle el flujo es importante escuchar ete servicio primero si no falla el codigo porque tra el codigo viejo 
-        cy.wait('@Sessionid', { timeout: 60000 }).then(xhr => {
-        expect(xhr.status).to.eq(200);
-        expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-        expect(xhr.responseBody.OnboardingEmailData.emailsend).to.eq(true);
-        expect(xhr.responseBody.OnboardingEmailData.code).to.eq('Ok');
+    it("Biometria Exitosa", () => {
+      cy.fixture("index").then((index) => {
+        cy.get("[data-test=comencemos_btn]").click();
+        cy.wait(7000);
+        cy.get("[data-test=insertar-correo]").click();
+        cy.get("[data-test=insertar-correo]").type(
+          biometria.datosUsuario.email
+        );
+        cy.get("[data-test=insertar-ccdigo]").click();
+        cy.get("[data-test=insertar-ccdigo]").type(biometria.datosUsuario.code);
+        cy.get('[data-test="enviar-correo-electronico"]').click();
+        cy.get('[data-test="es-correcto-email"]').click();
+        cy.wait("@Sessionid", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(xhr.responseBody.OnboardingEmailData.code).to.eq("Ok");
         });
-    
-    //Este servicio trae el codigo y lo inserta en el front
-        cy.request(
-            "POST",
-            Cypress.env("baseUrlBack") + "wsgetsessionid", 
-            {Email: userCase.datosUsuario.email}
-            ).then(xhr => {
-            cy.log(JSON.stringify(xhr.body));
-        
-            secretCode = (xhr.body.OnboardingSessionData.sessionId);
-            cy.get('[data-test="codeAuth-input"]').type(secretCode)
-            cy.get('[data-test="siguiente-codigo"]').click()
-        
-        })//cierre wsgetssessionid
-
-        //Este servicio verifica que el codigo enviado sea el correcto         
-        cy.wait('@ValidateSessionId', { timeout: 60000 }).then(xhr => {
-        expect(xhr.status).to.eq(200);
-        expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-        })// Cierre ValidateSessionId
-        
-        //Pantalla FATCAPEP 
-        cy.get('[data-test="no-fatca-btn"]', { timeout: 60000 }).click()
-        expect('[data-test="no-fatca-btn"]').to.exist 
-        expect('[data-test="si-fatca-btn"]').to.exist 
-        cy.get('[data-test="no-pep"]', { timeout: 60000 }).click()
-        expect('[data-test="no-pep"]').to.exist 
-        expect('[data-test="si-pep"]').to.exist       
-        cy.screenshot('BiometriaKOSES3FA/EVIDENCIA1', { timeout: 60000 })
-        expect('[data-test="fatcapep-btn-siguiente"]').to.exist 
-        cy.get('[data-test="fatcapep-btn-siguiente"]', { timeout: 60000 }).click()
-        
-        
-        //Servicio FATCA y PEP 
-        cy.wait('@FatcaPep', { timeout: 60000 }).then(xhr => {
-        expect(xhr.status).to.eq(200);
-        expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-        })
-
-        //Gif de OCR se utiliza el separado por que no se ha configurado la pantalla
-        expect('[data-test="siguiente-ocr-gif"]').to.exist
-        cy.get('[data-test="siguiente-ocr-gif"]', { timeout: 60000 }).click()
-        //Boton de siguiente que se habilita en la vista de dispositivos. comentar esta linea cuando sale la pantalla desktop 
-            
-        
-        cy.wait(25000)
-        expect('[data-test="ocr-separado-siguiente"]').to.exist
-        cy.get('[data-test="ocr-separado-siguiente"]', { timeout: 90000 }).click({force:true}) //pantallas separadas
-        
-        
-        //Me gusta de la pantalla unificada de OCR cy.get('[data-test="ocr-unificado-siguiente"]')
-        
-        cy.wait('@ocr', { timeout: 100000 }).then(xhr => {  //Revisar porque en OCR no esta 
-        expect(xhr.status).to.eq(200);
-        expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-        expect(xhr.responseBody.OnBoardingOcrData.serviceResponse).to.eq(true);
-        expect(xhr.responseBody.OnBoardingOcrData.code).to.eq('Ok')
-        }) 
-
-        cy.get('[data-test="apptividad-acepto-btn"]', { timeout: 60000 }).click()
-
-        cy.wait('@apptividad', { timeout: 100000 }).then(xhr => {
-        expect(xhr.status).to.eq(200);
-        expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-        expect(xhr.responseBody.OnboardingApptivityData.serviceResponse).to.eq(true);
-        expect(xhr.responseBody.OnboardingApptivityData.description).to.eq('Ok')   
-        expect ('[data-test="siguiente-selfie-gif"]').to.exist
+        cy.wait(5000);
+        cy.get("[data-test=quiero-mi-cuenta-btn]").click();
+        cy.get("[data-test=no-fatca-btn]").click();
+        cy.get("[data-test=no-fis]").click();
+        cy.get("[data-test=no-pep]").click();
+        cy.get("[data-test=no-fampep]").click();
+        cy.get("[data-test=fatcapep-btn-siguiente]").click();
+        cy.wait("@FatcaPep", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
         });
-
-        cy.get('[data-test="siguiente-selfie-gif"]', { timeout: 60000 }).click()
-        
-        expect ('[data-test="iniciar-captura-separado"]').to.exist
-        cy.get('[data-test="iniciar-captura-separado"]', { timeout: 60000 }).click()
-        cy.wait(30000)
-        expect('[data-test="siguiente-biometria"]').to.exist
-        cy.get('[data-test="siguiente-biometria"]', { timeout: 60000 }).click()
-        
-
-        cy.get('a[class=navbar-brand]').click({timeout: 6000}) //Opcion de reintento con clic en el logo de inicio 
-        cy.screenshot('BiometriaKOSES3FA/EVIDENCIA2', { timeout: 60000 })
-        })
-
-        it('caso - segundo intento en biometria sin borrar', ()  => {
-
-        //Aqui se repite nuevamente el flujo para hacer los dos intentos 
-        cy.get('[data-test=comencemos_btn]', {timeout: 600000}).click({force:true})
-        cy.get('[data-test=no-soy-cliente-btn]').click({force:true}).end()
-        cy.wait(100)
-        cy.get('[data-test=quiero-mi-cuenta-btn]').click()
-        
-        cy.get('[data-test=insertar-correo]').type(userCase.datosUsuario.email)
-        
-        
-        cy.get('[data-test="enviar-correo-electronico"]').click()
-        cy.screenshot('BiometriaKOSES3FA/EVIDENCIA3', { timeout: 60000 })
-        cy.get('[data-test="es-correcto-email"]').click()
-
-  
-        cy.wait('@Sessionid', { timeout: 60000 }).then(xhr => {
-        expect(xhr.status).to.eq(200);
-        expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-        expect(xhr.responseBody.OnboardingEmailData.emailsend).to.eq(true);
-        expect(xhr.responseBody.OnboardingEmailData.code).to.eq('Ok');
+        cy.wait(20000);
+        cy.get("[data-test=ocr-unificado-siguiente]").click();
+        cy.wait("@Ocr", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-    
-          cy.request(
-            "POST",
-            Cypress.env("baseUrlBack") + "wsgetsessionid", 
-            {Email: userCase.datosUsuario.email}
-            ).then(xhr => {
-                cy.log(JSON.stringify(xhr.body));
-    
-                secretCode = (xhr.body.OnboardingSessionData.sessionId);
-                cy.get('[data-test="codeAuth-input"]').type(secretCode)
-                cy.get('[data-test="siguiente-codigo"]').click()
-    
-            })//cierre wsgetssessionid
-            
-            cy.wait('@ValidateSessionId', { timeout: 60000 }).then(xhr => {
-                expect(xhr.status).to.eq(200);
-                expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-        
-    
-            })// Cierre ValidateSessionId
-    
-            
-            cy.get('[data-test="no-fatca-btn"]', { timeout: 60000 }).click()
-            expect('[data-test="no-fatca-btn"]').to.exist 
-            expect('[data-test="si-fatca-btn"]').to.exist 
-            cy.get('[data-test="no-pep"]', { timeout: 60000 }).click()
-            expect('[data-test="no-pep"]').to.exist 
-            expect('[data-test="si-pep"]').to.exist 
-           
-            cy.screenshot('BiometriaKOSES3FA/EVIDENCIA3', { timeout: 60000 })
-            expect('[data-test="fatcapep-btn-siguiente"]').to.exist
-            
-            
-            cy.get('[data-test="fatcapep-btn-siguiente"]', { timeout: 60000 }).click()
-            
-            
-            cy.wait('@FatcaPep', { timeout: 60000 }).then(xhr => {
-                expect(xhr.status).to.eq(200);
-                expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-            })
-            //Gif de OCR 
-            expect('[data-test="siguiente-ocr-gif"]').to.exist
-            cy.get('[data-test="siguiente-ocr-gif"]', { timeout: 60000 }).click()
-            //Boton de siguiente que se habilita en la vista de dispositivos. comentar esta linea cuando sale la pantalla desktop 
-                
-            cy.screenshot('BiometriaKOSES3FA/EVIDENCIA4', { timeout: 60000 })
-            cy.wait(25000)
-            expect('[data-test="ocr-separado-siguiente"]').to.exist
-            cy.get('[data-test="ocr-separado-siguiente"]', { timeout: 90000 }).click({force:true}) //pantallas separadas
-            
-            
-            //Me gusta de la pantalla unificada de OCR 
-            // cy.get('[data-test="ocr-unificado-siguiente"]')
-    
-            cy.wait('@ocr', { timeout: 100000 }).then(xhr => {  //Revisar porque en OCR no esta 
-                expect(xhr.status).to.eq(200);
-                expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-                expect(xhr.responseBody.OnBoardingOcrData.serviceResponse).to.eq(true);
-                expect(xhr.responseBody.OnBoardingOcrData.code).to.eq('Ok')
-                
-            }) 
-            cy.get('[data-test="apptividad-acepto-btn"]', { timeout: 60000 }).click()
-            cy.wait('@apptividad', { timeout: 100000 }).then(xhr => {
-                expect(xhr.status).to.eq(200);
-                expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-                expect(xhr.responseBody.OnboardingApptivityData.serviceResponse).to.eq(true);
-                expect(xhr.responseBody.OnboardingApptivityData.description).to.eq('Ok')   
-                expect ('[data-test="siguiente-selfie-gif"]').to.exist
-            });
-            cy.get('[data-test="siguiente-selfie-gif"]', { timeout: 60000 }).click()
-            expect ('[data-test="iniciar-captura-separado"]').to.exist
-            cy.get('[data-test="iniciar-captura-separado"]', { timeout: 60000 }).click()
-            cy.wait(30000)
-            expect('[data-test="siguiente-biometria"]').to.exist
-            cy.get('[data-test="siguiente-biometria"]', { timeout: 60000 }).click()
-            cy.screenshot('BiometriaKOSES3FA/EVIDENCIA5', { timeout: 60000 })
-            cy.wait('@biometria', { timeout: 100000 }).then(xhr => {
-                expect(xhr.status).to.eq(401);
-                expect(xhr.responseBody.HttpResponse.code).to.eq(401);
-                expect(xhr.responseBody.HttpResponse.message).to.eq("El servicio fue utilizado de manera maliciosa");
-                expect(xhr.responseBody.OnBoardingBiometricData.code).to.eq("SES3FA"); 
-                expect(xhr.responseBody.OnBoardingBiometricData.diagnosticMessage).to.eq(null); 
-                expect(xhr.responseBody.OnBoardingBiometricData.serviceResponse).to.eq(false); 
-            })
-            cy.get('[id="SES3FA"]').contains('ENTENDIDO', { timeout: 60000 }).click()
-        })
-    })
+        cy.wait(3000);
+        cy.get(":nth-child(1) > .form-control").clear();
+        cy.get(":nth-child(2) > .form-control").clear();
+        cy.get('input[formcontrolname="FechaNacimiento"]').clear();
+        cy.get('input[formcontrolname="Fecha_expedicion"]').clear();
+        cy.get('input[formcontrolname="Fecha_vencimiento"]').clear();
+        cy.get(":nth-child(10) > .form-control").clear();
+        cy.get(":nth-child(1) > .form-control").click();
+        cy.get(":nth-child(1) > .form-control").type(
+          biometria.datosUsuario.nombres
+        );
+        cy.get(":nth-child(2) > .form-control").type(
+          biometria.datosUsuario.apellidos
+        );
+        cy.get('input[formcontrolname="FechaNacimiento"]').type(
+          biometria.datosUsuario.fechaNacimiento
+        );
+        cy.get(":nth-child(4) > .form-control").select("Masculino");
+        cy.get('input[formcontrolname="Fecha_expedicion"]').type(
+          biometria.datosUsuario.fechaexpedicion
+        );
+        cy.get('input[formcontrolname="Fecha_vencimiento"]').type(
+          biometria.datosUsuario.fechaVencimiento
+        );
+        cy.get("[data-test=situacion-laboral-select]").select("COLOMBIA");
+        cy.get(":nth-child(10) > .form-control").type(
+          biometria.datosUsuario.numeroRif
+        );
+        cy.get("[data-test=generar-contrato-btn]").should(
+          "have.class",
+          "btnDCLJR"
+        );
+        cy.get("[data-test=generar-contrato-btn]").click();
+        cy.wait(1000);
+        cy.get('button[id="enviar-correo-correcto"]').click();
+        cy.wait("@validatedata", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(xhr.responseBody.OnboardingValidateData.serviceResponse).to.eq(
+            true
+          );
+        });
+        cy.wait(3000);
+        cy.get("[data-test=apptividad-acepto-btn]").click();
+        cy.wait("@apptividad", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(xhr.responseBody.OnboardingApptivityData.code).to.eq("Ok");
+          expect(
+            xhr.responseBody.OnboardingApptivityData.serviceResponse
+          ).to.eq(true);
+        });
+        cy.get('p[class="titleTutorialCedulaICB"]')
+          .eq(1)
+          .should("have.text", "Tómate una selfie, tal y como lo ves");
+        cy.wait(8000);
+        cy.get("[data-test=iniciar-captura-unificado]").click({
+          timeout: 6000,
+        });
+        cy.wait(20000);
+        cy.screenshot("APPTIVIDAD/rechazado");
+        cy.get("[data-test=siguiente-biometria-unificado]").click();
+        cy.wait("@biometria", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(xhr.responseBody.OnBoardingBiometricData.code).to.eq("Ok");
+          expect(
+            xhr.responseBody.OnBoardingBiometricData.serviceResponse
+          ).to.eq(true);
+        });
+        cy.get('p[class="subtitleTuDireccion"]').should(
+          "have.text",
+          " Ahora necesitamos tu teléfono celular y tus datos residenciales: "
+        );
+      });
+    });
+
+    /*it("Biometria Fallida", () => {
+        cy.fixture("index").then((index) => {
+          cy.get("[data-test=comencemos_btn]").click();
+          cy.wait(7000);
+          cy.get("[data-test=insertar-correo]").click();
+          cy.get("[data-test=insertar-correo]").type(
+              biometria.datosUsuario.email
+          );
+          cy.get("[data-test=insertar-ccdigo]").click();
+          cy.get("[data-test=insertar-ccdigo]").type(
+              biometria.datosUsuario.code
+          );
+          cy.get('[data-test="enviar-correo-electronico"]').click();
+          cy.get('[data-test="es-correcto-email"]').click();
+          cy.wait("@Sessionid", { timeout: 60000 }).then((xhr) => {
+            expect(xhr.status).to.eq(200);
+            expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+            expect(xhr.responseBody.OnboardingEmailData.code).to.eq("Ok");
+          });
+          cy.wait(5000);
+          cy.get('p[class="titleTutorialCedulaICB"]')
+            .eq(1)
+            .should("have.text", "Tómate una selfie, tal y como lo ves");
+          cy.get('[data-test=iniciar-captura-unificado]').click({timeout:60000});
+          cy.wait(20000);
+          //cy.get('[data-test=siguiente-biometria-unificado]').click()
+          cy.screenshot("APPTIVIDAD/rechazado2");
+        });
+      });*/
+  });
 }

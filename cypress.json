@@ -5,6 +5,9 @@
   "projectId": "u3d3kj",
   "retries": {
     "runMode": 1,
-    "openMode": 1
-    }
+    "openMode": 0
+    },
+  "chromeWebSecurity": false,
+  "waitForAnimations": false,
+  "animationDistanceThreshold": 80
 }

@@ -1,5 +1,4 @@
 beforeEach(() => {
-
   cy.visit('./')
   cy.server()
   cy.route('POST', '**/wsgetsessionidbi').as('code')

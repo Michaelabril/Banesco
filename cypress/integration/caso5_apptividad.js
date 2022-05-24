@@ -69,7 +69,6 @@ export function APPTIVIDAD(apptividad) {
         cy.get('input[formcontrolname="FechaNacimiento"]').clear();
         cy.get('input[formcontrolname="Fecha_expedicion"]').clear();
         cy.get('input[formcontrolname="Fecha_vencimiento"]').clear();
-
         cy.get(":nth-child(10) > .form-control").clear();
         cy.get(":nth-child(1) > .form-control").click();
         cy.get(":nth-child(1) > .form-control").type(
@@ -152,7 +151,7 @@ export function APPTIVIDAD(apptividad) {
         cy.wait(8000);
         cy.get("[data-test=iniciar-captura-unificado]").click();
         cy.wait(3000);
-        cy.screenshot("apptividad/exitoso");
+        cy.screenshot("");
       });
     });
   });

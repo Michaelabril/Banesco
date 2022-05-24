@@ -1,4 +1,4 @@
-export function DIRECCION(direccion) {
+export function TDD(tdd) {
   describe("Onboarding KO FATCA", () => {
     //let secretCode;
     beforeEach(() => {
@@ -16,10 +16,16 @@ export function DIRECCION(direccion) {
       cy.route("POST", "**/wsocr").as("Ocr");
       //servicio de wsvalidatedata
       cy.route("POST", "**/wsvalidatedata").as("validatedata");
-      // Servicio de apptividad 
+      // Servicio de apptividad
       cy.route("POST", "**/wsvalidateapptivity").as("apptividad");
       // Servicio de biometria
       cy.route("POST", "**/wsbiometric").as("biometria");
+      // Servicio de guardar direccion
+      cy.route("POST", "**/wssavesessionaddress").as("guardarDireccion");
+      // Servicio de seguro de fraude
+      cy.route("POST", "**/wsconsultinsurance").as("seguro");
+      // Servicio de tdd
+      cy.route("POST", "**/wsconsulttdd").as("tdd");
     }); //Cierre del beforeEach
 
     /*it("Borrar la data", () => {
@@ -32,16 +38,18 @@ export function DIRECCION(direccion) {
       }); //cierre de wsdatacleaner
     });*/
 
-    it("Direccion Exitosa", () => {
+    it("TDD Exitosa", () => {
       cy.fixture("index").then((index) => {
         cy.get("[data-test=comencemos_btn]").should("be.visible").click();
         cy.wait(7000);
         cy.get("[data-test=insertar-correo]").should("be.visible").click();
-        cy.get("[data-test=insertar-correo]").should("be.visible").type(
-            direccion.datosUsuario.email
-        );
+        cy.get("[data-test=insertar-correo]")
+          .should("be.visible")
+          .type(tdd.datosUsuario.email);
         cy.get("[data-test=insertar-ccdigo]").should("be.visible").click();
-        cy.get("[data-test=insertar-ccdigo]").should("be.visible").type(direccion.datosUsuario.code);
+        cy.get("[data-test=insertar-ccdigo]")
+          .should("be.visible")
+          .type(tdd.datosUsuario.code);
         cy.get('[data-test="enviar-correo-electronico"]').click();
         cy.get('[data-test="es-correcto-email"]').click();
         cy.wait("@Sessionid", { timeout: 60000 }).then((xhr) => {
@@ -75,25 +83,23 @@ export function DIRECCION(direccion) {
         cy.get('input[formcontrolname="Fecha_vencimiento"]').clear();
         cy.get(":nth-child(10) > .form-control").clear();
         cy.get(":nth-child(1) > .form-control").click();
-        cy.get(":nth-child(1) > .form-control").type(
-            direccion.datosUsuario.nombres
-        );
+        cy.get(":nth-child(1) > .form-control").type(tdd.datosUsuario.nombres);
         cy.get(":nth-child(2) > .form-control").type(
-            direccion.datosUsuario.apellidos
+          tdd.datosUsuario.apellidos
         );
         cy.get('input[formcontrolname="FechaNacimiento"]').type(
-            direccion.datosUsuario.fechaNacimiento
+          tdd.datosUsuario.fechaNacimiento
         );
         cy.get(":nth-child(4) > .form-control").select("Masculino");
         cy.get('input[formcontrolname="Fecha_expedicion"]').type(
-            direccion.datosUsuario.fechaexpedicion
+          tdd.datosUsuario.fechaexpedicion
         );
         cy.get('input[formcontrolname="Fecha_vencimiento"]').type(
-            direccion.datosUsuario.fechaVencimiento
+          tdd.datosUsuario.fechaVencimiento
         );
         cy.get("[data-test=situacion-laboral-select]").select("COLOMBIA");
         cy.get(":nth-child(10) > .form-control").type(
-            direccion.datosUsuario.numeroRif
+          tdd.datosUsuario.numeroRif
         );
         cy.get("[data-test=generar-contrato-btn]").should(
           "have.class",
@@ -143,17 +149,86 @@ export function DIRECCION(direccion) {
           "have.text",
           " Ahora necesitamos tu teléfono celular y tus datos residenciales: "
         );
-        cy.get('[data-test=country]').should("be.visible").select("VENEZUELA")
-        cy.get('[data-test=distrito-select]').should("be.visible").select("MIRANDA")
-        cy.get('[data-test=corregimiento-select]').should("be.visible").select("NUESTRA SENORA DEL ROSARIO DE BARUT")
-        cy.get('[data-test=barriada-input]').should("be.visible").type(direccion.direccion.urbanizacion) 
-        cy.get('[data-test=Calle-input]').should("be.visible").type(direccion.direccion.calle)
-        cy.get(':nth-child(1) > [data-test=casa-apartamento]').should("be.visible").type(direccion.direccion.edificio)
-        cy.get(':nth-child(2) > [data-test=casa-apartamento]').should("be.visible").type(direccion.direccion.casa)
-        cy.get(':nth-child(5) > :nth-child(1) > [data-test=cellphone-input]').should("be.visible").type(direccion.direccion.telefonoResidencial)
-        cy.get('.col-md-6.ng-star-inserted > [data-test=cellphone-input]').should("be.visible").type(direccion.direccion.telefonoCelular)
-        cy.get('.col-md-12 > [data-test=cellphone-input]').should("be.visible").type(direccion.direccion.puntoReferencia)
-        cy.get('[data-test=siguiente-direccion-btn]').should("be.visible")
+        cy.get("[data-test=country]").should("be.visible").select("VENEZUELA");
+        cy.get("[data-test=distrito-select]")
+          .should("be.visible")
+          .select("MIRANDA");
+        cy.get("[data-test=corregimiento-select]")
+          .should("be.visible")
+          .select("NUESTRA SENORA DEL ROSARIO DE BARUT");
+        cy.get("[data-test=barriada-input]")
+          .should("be.visible")
+          .type(tdd.direccion.urbanizacion);
+        cy.get("[data-test=Calle-input]")
+          .should("be.visible")
+          .type(tdd.direccion.calle);
+        cy.get(":nth-child(1) > [data-test=casa-apartamento]")
+          .should("be.visible")
+          .type(tdd.direccion.edificio);
+        cy.get(":nth-child(2) > [data-test=casa-apartamento]")
+          .should("be.visible")
+          .type(tdd.direccion.casa);
+        cy.get(":nth-child(5) > :nth-child(1) > [data-test=cellphone-input]")
+          .should("be.visible")
+          .type(tdd.direccion.telefonoResidencial);
+        cy.get(".col-md-6.ng-star-inserted > [data-test=cellphone-input]")
+          .should("be.visible")
+          .type(tdd.direccion.telefonoCelular);
+        cy.get(".col-md-12 > [data-test=cellphone-input]")
+          .should("be.visible")
+          .type(tdd.direccion.puntoReferencia);
+        cy.get("[data-test=siguiente-direccion-btn]")
+          .should("be.visible")
+          .click();
+        cy.wait("@guardarDireccion", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(
+            xhr.responseBody.OnboardingSaveAddressData.serviceResponse
+          ).to.eq(true);
+        });
+
+        //TDD
+        cy.wait("@seguro", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(
+            xhr.responseBody.OnboardingConsultInsuranceData.Data[0]
+              .insurance_code
+          ).to.eq("03");
+          expect(
+            xhr.responseBody.OnboardingConsultInsuranceData.Data[0]
+              .insurance_description
+          ).to.eq("PROGRAMA CONTRA ROBO/FRAUDE 10,000.00");
+          expect(
+            xhr.responseBody.OnboardingConsultInsuranceData.Data[1]
+              .insurance_code
+          ).to.eq("06");
+          expect(
+            xhr.responseBody.OnboardingConsultInsuranceData.Data[1]
+              .insurance_description
+          ).to.eq("PROGRAMA CONTRA ROBO/FRAUDE 5,000.00");
+          expect(
+            xhr.responseBody.OnboardingConsultInsuranceData.ServiceResponse
+          ).to.eq(true);
+        });
+        cy.wait("@tdd", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(
+            xhr.responseBody.OnboardingConsultTddData.Data[0].card_code_emi
+          ).to.eq("05");
+          expect(
+            xhr.responseBody.OnboardingConsultTddData.Data[0].card_name
+          ).to.eq("DEBITO MASTERCARD STANDARD (CLASICA) INTERNACIONAL");
+          expect(
+            xhr.responseBody.OnboardingConsultTddData.Data[1].card_code_emi
+          ).to.eq("03");
+          expect(
+            xhr.responseBody.OnboardingConsultTddData.Data[1].card_name
+          ).to.eq("PLATINUM DEBITO BANCA INTERNACIONAL");
+          cy.get("[data-test=btn-quiero-tarjeta]").should("be.visible");
+        });
       });
     });
   });
