@@ -75,7 +75,7 @@ export function DECLARACIONJURADA(declaracionJurada) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingEmailData.code).to.eq("Ok");
         }); 
-        cy.wait(5000);/*
+        cy.wait(5000);
         cy.get("[data-test=quiero-mi-cuenta-btn]").should("be.visible").click();
         cy.get("[data-test=no-fatca-btn]").click();
         cy.get("[data-test=no-fis]").click();
@@ -344,7 +344,7 @@ export function DECLARACIONJURADA(declaracionJurada) {
           expect(xhr.responseBody.OnboardingProspectData.prospectSave).to.eq(true);
           expect(xhr.responseBody.OnboardingProspectData.serviceResponse).to.eq(true);
         });
-        cy.wait(3000)*/
+        cy.wait(3000)
         cy.get('.col-lg-9 > .container-fluid > :nth-child(1)').contains('Antes de continuar, necesito que nos proporciones los siguientes datos que completarán la prueba de tus ingresos')
         cy.get(':nth-child(2) > .buttonAttached').should("be.visible")
         cy.get('.mt-4 > .buttonAttached').should("be.visible")
