@@ -113,24 +113,23 @@ export function OCR(ocr) {
         );
         cy.get(".mt-4 > .buttonAttached").attachFile(firma, "{enter}");
         cy.get("[data-test=generar-contrato-btn]").click;
-        // cy.fixture(cartadetrabajo).then(fileContent => {
-        // cy.get(':nth-child(2) > .buttonAttached').attachFile({ fileContent, fileName, mineType: 'application/png' })
-        // cy.get('.mt-4 > .buttonAttached').attachFile({fileContent, fileName, mineType: 'application/png' })
-        // })
-        //       cy.fixture('images/Carta.png').as('trabajo')
-        // cy.get(':nth-child(2) > .buttonAttached').then(function ($input) {
-        //   // convert the logo base64 string to a blob
-        //   const blob = Cypress.Blob.base64StringToBlob(this.trabajo, 'image/png')
-        //   $input.fileupload('add', { files: blob })
-        // })
+        /*cy.fixture(cartadetrabajo).then(fileContent => {
+        cy.get(':nth-child(2) > .buttonAttached').attachFile({ fileContent, fileName, mineType: 'application/png' })
+        cy.get('.mt-4 > .buttonAttached').attachFile({fileContent, fileName, mineType: 'application/png' })
+        })
+        cy.fixture('images/Carta.png').as('trabajo')
+        cy.get(':nth-child(2) > .buttonAttached').then(function ($input) {
+        //convert the logo base64 string to a blob
+        const blob = Cypress.Blob.base64StringToBlob(this.trabajo, 'image/png')
+        $input.fileupload('add', { files: blob })
+        })
 
-        // onclick="document.getElementById('file').click();
+        onclick=("document.getElementById('file'").click();
 
-        // const Firma = 'firma';
-        // cy.fixture(Firma).then (fileContent => {
-        // cy.get('.mt-4 > .buttonAttached').attachFile({fileContent, fileName, mineType: 'application/jpeg' })
-        // })
-        //
+        const Firma = 'firma';
+        cy.fixture(Firma).then (fileContent => {
+        cy.get('.mt-4 > .buttonAttached').attachFile({fileContent, fileName, mineType: 'application/jpeg' })
+        })*/
       });
     });
   });

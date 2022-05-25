@@ -1,4 +1,4 @@
-export function DECLARACIONJURADA(declaracionJurada) {
+export function BENEFICIARIOS(beneficiarios) {
   describe("Onboarding Direccion", () => {
     //let secretCode;
     beforeEach(() => {
@@ -48,6 +48,14 @@ export function DECLARACIONJURADA(declaracionJurada) {
       cy.route("POST", "**/wsfiltercountries").as("beneficiariosPaises");
       // Servicio de filtrar relacion beneficiarios
       cy.route("POST", "**/wsfilterrelationship").as("relacionBeneficiarios");
+      // Servicio de guardar baneficiarios
+      cy.route("POST", "**/wsbeneficiaries").as("guardarBeneficiarios");
+      // Servicio de fmostrar el contracto
+      cy.route("POST", "**/wsgetfullcontract").as("mostrarContracto");
+      // Servicio de aceptarcontracto
+      cy.route("POST", "**/wsconfirmanswer").as("aceptarContracto");
+      // Servicio de registrar pendiente de aprobacion
+      cy.route("POST", "**/wsregisterpending").as("registrarpendiente");
     }); //Cierre del beforeEach
     
 
@@ -68,11 +76,11 @@ export function DECLARACIONJURADA(declaracionJurada) {
         cy.get("[data-test=insertar-correo]").should("be.visible").click();
         cy.get("[data-test=insertar-correo]")
           .should("be.visible")
-          .type(declaracionJurada.datosUsuario.email);
+          .type(beneficiarios.datosUsuario.email);
         cy.get("[data-test=insertar-ccdigo]").should("be.visible").click();
         cy.get("[data-test=insertar-ccdigo]")
           .should("be.visible")
-          .type(declaracionJurada.datosUsuario.code);
+          .type(beneficiarios.datosUsuario.code);
         cy.get('[data-test="enviar-correo-electronico"]').click();
         cy.get('[data-test="es-correcto-email"]').click();
         cy.wait("@Sessionid", { timeout: 60000 }).then((xhr) => {
@@ -107,24 +115,24 @@ export function DECLARACIONJURADA(declaracionJurada) {
         cy.get(":nth-child(10) > .form-control").clear();
         cy.get(":nth-child(1) > .form-control").click();
         cy.get(":nth-child(1) > .form-control").type(
-          declaracionJurada.datosUsuario.nombres
+          beneficiarios.datosUsuario.nombres
         );
         cy.get(":nth-child(2) > .form-control").type(
-          declaracionJurada.datosUsuario.apellidos
+          beneficiarios.datosUsuario.apellidos
         );
         cy.get('input[formcontrolname="FechaNacimiento"]').type(
-          declaracionJurada.datosUsuario.fechaNacimiento
+          beneficiarios.datosUsuario.fechaNacimiento
         );
         cy.get(":nth-child(4) > .form-control").select("Masculino");
         cy.get('input[formcontrolname="Fecha_expedicion"]').type(
-          declaracionJurada.datosUsuario.fechaexpedicion
+          beneficiarios.datosUsuario.fechaexpedicion
         );
         cy.get('input[formcontrolname="Fecha_vencimiento"]').type(
-          declaracionJurada.datosUsuario.fechaVencimiento
+          beneficiarios.datosUsuario.fechaVencimiento
         );
         cy.get("[data-test=situacion-laboral-select]").select("COLOMBIA");
         cy.get(":nth-child(10) > .form-control").type(
-          declaracionJurada.datosUsuario.numeroRif
+          beneficiarios.datosUsuario.numeroRif
         );
         cy.get("[data-test=generar-contrato-btn]").should(
           "have.class",
@@ -160,7 +168,6 @@ export function DECLARACIONJURADA(declaracionJurada) {
           timeout: 6000,
         });
         cy.wait(20000);
-        cy.screenshot("APPTIVIDAD/rechazado");
         cy.get("[data-test=siguiente-biometria-unificado]").click();
         cy.wait("@biometria", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -185,25 +192,25 @@ export function DECLARACIONJURADA(declaracionJurada) {
           .select("NUESTRA SENORA DEL ROSARIO DE BARUT");
         cy.get("[data-test=barriada-input]")
           .should("be.visible")
-          .type(declaracionJurada.direccion.urbanizacion);
+          .type(beneficiarios.direccion.urbanizacion);
         cy.get("[data-test=Calle-input]")
           .should("be.visible")
-          .type(declaracionJurada.direccion.calle);
+          .type(beneficiarios.direccion.calle);
         cy.get(":nth-child(1) > [data-test=casa-apartamento]")
           .should("be.visible")
-          .type(declaracionJurada.direccion.edificio);
+          .type(beneficiarios.direccion.edificio);
         cy.get(":nth-child(2) > [data-test=casa-apartamento]")
           .should("be.visible")
-          .type(declaracionJurada.direccion.casa);
+          .type(beneficiarios.direccion.casa);
         cy.get(":nth-child(5) > :nth-child(1) > [data-test=cellphone-input]")
           .should("be.visible")
-          .type(declaracionJurada.direccion.telefonoResidencial);
+          .type(beneficiarios.direccion.telefonoResidencial);
         cy.get(".col-md-6.ng-star-inserted > [data-test=cellphone-input]")
           .should("be.visible")
-          .type(declaracionJurada.direccion.telefonoCelular);
+          .type(beneficiarios.direccion.telefonoCelular);
         cy.get(".col-md-12 > [data-test=cellphone-input]")
           .should("be.visible")
-          .type(declaracionJurada.direccion.puntoReferencia);
+          .type(beneficiarios.direccion.puntoReferencia);
         cy.get("[data-test=siguiente-direccion-btn]")
           .should("be.visible")
           .click();
@@ -321,16 +328,16 @@ export function DECLARACIONJURADA(declaracionJurada) {
           .select("ADMINISTRADOR");
         cy.get("[data-test=salario-input]")
           .should("be.visible")
-          .type(declaracionJurada.declaracion.salario);
+          .type(beneficiarios.declaracion.salario);
         cy.get("[data-test=text-otros-ingresos]")
           .should("be.visible")
-          .type(declaracionJurada.declaracion.descripcionOtrosIngresos);
+          .type(beneficiarios.declaracion.descripcionOtrosIngresos);
         cy.get("[data-test=monto-otros-ingresos]")
           .should("be.visible")
-          .type(declaracionJurada.declaracion.montoOtrosIngresos);
+          .type(beneficiarios.declaracion.montoOtrosIngresos);
         cy.get("[data-test=monto_apertura-input]")
           .should("be.visible")
-          .type(declaracionJurada.declaracion.montoApertura);
+          .type(beneficiarios.declaracion.montoApertura);
         cy.get("[data-test=origen_fondos-select]")
           .should("be.visible")
           .select("FONDOS PROPIOS");
@@ -350,6 +357,8 @@ export function DECLARACIONJURADA(declaracionJurada) {
           expect(xhr.responseBody.OnboardingProspectData.serviceResponse).to.eq(true);
         });
         cy.wait(3000)
+
+        //Carga de documentos
         cy.get('.col-lg-9 > .container-fluid > :nth-child(1)').contains('Antes de continuar, necesito que nos proporciones los siguientes datos que completarán la prueba de tus ingresos')
         const CTRABAJO = "ctrabajo.pdf";
         const DRENTA = "drenta.pdf";
@@ -368,6 +377,8 @@ export function DECLARACIONJURADA(declaracionJurada) {
           expect(xhr.responseBody.HttpResponse.message).to.eq("OK");
           expect(xhr.responseBody.OnboardingGetImagesData.serviceResponse).to.eq(true);
         });
+
+        //Beneficiarios
         cy.wait(3000)
         cy.get('.pb-0').contains('Queremos resguardar tus intereses. En caso de que te ausentes, coméntanos a quién dejarías estos fondos ')
         cy.wait("@beneficiariosPaises", { timeout: 60000 }).then((xhr) => {
@@ -381,6 +392,42 @@ export function DECLARACIONJURADA(declaracionJurada) {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingFilterRelationshipData.ServiceResponse).to.eq(true);
+        });
+        cy.get('[data-test=PrimerNombre-input]').should("be.visible").type(beneficiarios.beneficiariosData.Bnombres,'{enter}')
+        cy.get('[data-test=PrimerApellido-input]').should("be.visible").type(beneficiarios.beneficiariosData.Bapellidos)
+        cy.get('[data-test=FechaNacimiento-input]').type(beneficiarios.beneficiariosData.BfechaNacimiento)
+        cy.get('[data-test=Nacionalidad-select]').should("be.visible").select('COLOMBIA')
+        cy.get('[data-test=Parentezco-select]').should("be.visible").select('MADRE')
+        //cy.get('[data-test=Porcentage-input]').should("be.visible").type('{esc}')
+        cy.get('[data-test=Identificacion-input]').should("be.visible").type(beneficiarios.beneficiariosData.Bidentificacion)
+        cy.get(':nth-child(8) > .form-group > [data-test=Telefono-input]').should("be.visible").type(beneficiarios.beneficiariosData.Btelefono)
+        cy.get('[data-test=Correo-input]').should("be.visible").type(beneficiarios.beneficiariosData.Bemail)
+        cy.get('b').should("be.visible").click()
+        cy.wait(3000)
+        cy.get('[data-test=generar-contrato-btn]').should("be.visible").click()
+        cy.wait(1000)
+        cy.wait("@guardarBeneficiarios", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(xhr.responseBody.OnboardingBeneficiariesData.serviceResponse).to.eq(true);
+        });
+        cy.wait("@mostrarContracto", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.message).to.eq("Ok.");
+        });
+        cy.wait(10000)
+        cy.screenshot("BENEFICIARIOS/contracto.png");
+        cy.get('data-test="acepto-contrato"').click()
+        cy.wait("@aceptarContracto", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(xhr.responseBody.OnboardingConfirmData.serviceResponse).to.eq(true);
+        });
+        cy.wait("@registrarpendiente", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(xhr.responseBody.OnboardingRegisterPendingData.serviceResponse).to.eq(true);
         });
        });
     });
