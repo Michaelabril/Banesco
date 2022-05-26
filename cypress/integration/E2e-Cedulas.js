@@ -73,11 +73,14 @@ export function FLUJOSCOMPLETOS(e2e) {
         expect(response.body.HttpResponse.code).to.eq(200);
       }); //cierre de wsdatacleaner
     });*/
-
+/*
     it("Cuenta Ahorro", () => {
       cy.fixture("index").then((index) => {
+        cy.wait(10000);
         cy.get("[data-test=comencemos_btn]").should("be.visible").click();
-        cy.wait(7000);
+        
+        //Pantalla de loguin
+        cy.wait(10000);
         cy.get("[data-test=insertar-correo]").should("be.visible").click();
         cy.get("[data-test=insertar-correo]")
           .should("be.visible")
@@ -98,8 +101,12 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingParametersData.data.documenttyped).to.eq('CUENTA DE AHORRO'); 
       });
-        cy.wait(5000);
+      // Pantalla de plantilla
+        cy.wait(10000);
         cy.get("[data-test=quiero-mi-cuenta-btn]").should("be.visible").click();
+
+        //Pantalla de preguntas regulatorias
+        cy.wait(10000);
         cy.get("[data-test=no-fatca-btn]").click();
         cy.get("[data-test=no-fis]").click();
         cy.get("[data-test=no-pep]").click();
@@ -109,6 +116,8 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
         });
+
+        //Pantalla de captura identificacion cedula
         cy.wait(20000);
         cy.get("[data-test=ocr-unificado-siguiente]").click();
         cy.wait("@Ocr", { timeout: 60000 }).then((xhr) => {
@@ -116,7 +125,9 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-        cy.wait(3000);
+
+        // Pantalla de Datos generales
+        cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
         cy.get(":nth-child(2) > .form-control").clear();
         cy.get('input[formcontrolname="FechaNacimiento"]').clear();
@@ -158,7 +169,8 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-        cy.wait(3000);
+        // Pantalla de APPTIVIDAD
+        cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
         cy.wait("@apptividad", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -170,14 +182,14 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         // Biometria
+        cy.wait(10000);
         cy.get('p[class="titleTutorialCedulaICB"]')
           .eq(1)
           .should("have.text", "Tómate una selfie, tal y como lo ves");
-        cy.wait(8000);
         cy.get("[data-test=iniciar-captura-unificado]").click({
           timeout: 6000,
         });
-        cy.wait(20000);
+        cy.wait(90000);
         cy.get("[data-test=siguiente-biometria-unificado]").click();
         cy.wait("@biometria", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -189,6 +201,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //Direccion
+        cy.wait(10000);
         cy.get('p[class="subtitleTuDireccion"]').should(
           "have.text",
           " Ahora necesitamos tu teléfono celular y tus datos residenciales: "
@@ -233,6 +246,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //TDD
+        cy.wait(10000);
         cy.wait("@seguro", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
@@ -327,6 +341,8 @@ export function FLUJOSCOMPLETOS(e2e) {
             expect(xhr.responseBody.HttpResponse.code).to.eq(200);
             expect(xhr.responseBody.HttpResponse.message).to.eq("Ok");
           });
+        // Pantalla de DECLARACION JURADA
+        cy.wait(10000);
         cy.get("[data-test=situacion-laboral-select]")
           .should("be.visible")
           .select("ASALARIADO");
@@ -366,9 +382,8 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.OnboardingProspectData.prospectSave).to.eq(true);
           expect(xhr.responseBody.OnboardingProspectData.serviceResponse).to.eq(true);
         });
-        cy.wait(3000)
-
         //Carga de documentos
+        cy.wait(10000);
         cy.get('.col-lg-9 > .container-fluid > :nth-child(1)').contains('Antes de continuar, necesito que nos proporciones los siguientes datos que completarán la prueba de tus ingresos')
         const CTRABAJO = "ctrabajo.pdf";
         const DRENTA = "drenta.pdf";
@@ -388,7 +403,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.OnboardingGetImagesData.serviceResponse).to.eq(true);
         });
         //Beneficiarios
-        cy.wait(3000)
+        cy.wait(10000)
         cy.get('.pb-0').contains('Queremos resguardar tus intereses. En caso de que te ausentes, coméntanos a quién dejarías estos fondos ')
         cy.wait("@beneficiariosPaises", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -443,8 +458,11 @@ export function FLUJOSCOMPLETOS(e2e) {
 
     it("Cuenta Euros", () => {
       cy.fixture("index").then((index) => {
+        //Pantalla de INICIO
+        cy.wait(10000);
         cy.get("[data-test=comencemos_btn]").should("be.visible").click();
-        cy.wait(7000);
+        //Pantalla de loguin
+        cy.wait(10000);
         cy.get("[data-test=insertar-correo]").should("be.visible").click();
         cy.get("[data-test=insertar-correo]")
           .should("be.visible")
@@ -465,8 +483,11 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingParametersData.data.documenttyped).to.eq('CUENTA DE AHORRO EN EUROS'); 
       });
-        cy.wait(5000);
+        //Pantalla de TEMPLATE DE PRODUCTO
+        cy.wait(10000);
         cy.get("[data-test=quiero-mi-cuenta-btn]").should("be.visible").click();
+        //Pantalla de PREGUNTAS REGULATORIAS
+        cy.wait(10000);
         cy.get("[data-test=no-fatca-btn]").click();
         cy.get("[data-test=no-fis]").click();
         cy.get("[data-test=no-pep]").click();
@@ -476,6 +497,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
         });
+        ///Pantalla de ocr
         cy.wait(20000);
         cy.get("[data-test=ocr-unificado-siguiente]").click();
         cy.wait("@Ocr", { timeout: 60000 }).then((xhr) => {
@@ -483,7 +505,8 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-        cy.wait(3000);
+        //Pantalla de Datos genereales
+        cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
         cy.get(":nth-child(2) > .form-control").clear();
         cy.get('input[formcontrolname="FechaNacimiento"]').clear();
@@ -525,7 +548,8 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-        cy.wait(3000);
+        //Pantalla de APPTIVIDAD
+        cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
         cy.wait("@apptividad", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -536,15 +560,15 @@ export function FLUJOSCOMPLETOS(e2e) {
           ).to.eq(true);
         });
 
-        // Biometria
+        //Pantalla de BIOMETRIA
+        cy.wait(10000);
         cy.get('p[class="titleTutorialCedulaICB"]')
           .eq(1)
           .should("have.text", "Tómate una selfie, tal y como lo ves");
-        cy.wait(8000);
         cy.get("[data-test=iniciar-captura-unificado]").click({
           timeout: 6000,
         });
-        cy.wait(20000);
+        cy.wait(90000);
         cy.get("[data-test=siguiente-biometria-unificado]").click();
         cy.wait("@biometria", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -556,6 +580,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //Direccion
+        cy.wait(10000);
         cy.get('p[class="subtitleTuDireccion"]').should(
           "have.text",
           " Ahora necesitamos tu teléfono celular y tus datos residenciales: "
@@ -600,6 +625,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //TDD
+        cy.wait(10000);
         cy.wait("@seguro", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
@@ -694,6 +720,8 @@ export function FLUJOSCOMPLETOS(e2e) {
             expect(xhr.responseBody.HttpResponse.code).to.eq(200);
             expect(xhr.responseBody.HttpResponse.message).to.eq("Ok");
           });
+          //Pantalla de DECLARACION JURADA 
+        cy.wait(10000);
         cy.get("[data-test=situacion-laboral-select]")
           .should("be.visible")
           .select("ASALARIADO");
@@ -733,9 +761,9 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.OnboardingProspectData.prospectSave).to.eq(true);
           expect(xhr.responseBody.OnboardingProspectData.serviceResponse).to.eq(true);
         });
-        cy.wait(3000)
 
         //Carga de documentos
+        cy.wait(10000);
         cy.get('.col-lg-9 > .container-fluid > :nth-child(1)').contains('Antes de continuar, necesito que nos proporciones los siguientes datos que completarán la prueba de tus ingresos')
         const CTRABAJO = "ctrabajo.pdf";
         const DRENTA = "drenta.pdf";
@@ -756,7 +784,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //Beneficiarios
-        cy.wait(3000)
+        cy.wait(10000);
         cy.get('.pb-0').contains('Queremos resguardar tus intereses. En caso de que te ausentes, coméntanos a quién dejarías estos fondos ')
         cy.wait("@beneficiariosPaises", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -811,8 +839,12 @@ export function FLUJOSCOMPLETOS(e2e) {
 
     it("Cuenta Corriente", () => {
       cy.fixture("index").then((index) => {
+        // Inicio
+        cy.wait(10000);
         cy.get("[data-test=comencemos_btn]").should("be.visible").click();
-        cy.wait(7000);
+        
+        //Loguin
+        cy.wait(10000);
         cy.get("[data-test=insertar-correo]").should("be.visible").click();
         cy.get("[data-test=insertar-correo]")
           .should("be.visible")
@@ -833,8 +865,12 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingParametersData.data.documenttyped).to.eq('CUENTA CORRIENTE'); 
       });
-        cy.wait(5000);
-        //cy.get("[data-test=quiero-mi-cuenta-btn]").should("be.visible").click();
+        // Caracteristicas de producto
+        cy.wait(10000);
+        cy.get("[data-test=quiero-mi-cuenta-btn]").should("be.visible").click();
+
+        //Preguntas regulatorias
+        cy.wait(10000);
         cy.get("[data-test=no-fatca-btn]").click();
         cy.get("[data-test=no-fis]").click();
         cy.get("[data-test=no-pep]").click();
@@ -844,6 +880,8 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
         });
+
+        //Ocr
         cy.wait(20000);
         cy.get("[data-test=ocr-unificado-siguiente]").click();
         cy.wait("@Ocr", { timeout: 60000 }).then((xhr) => {
@@ -851,7 +889,9 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-        cy.wait(3000);
+
+        //Datos Generales
+        cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
         cy.get(":nth-child(2) > .form-control").clear();
         cy.get('input[formcontrolname="FechaNacimiento"]').clear();
@@ -893,7 +933,9 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-        cy.wait(3000);
+
+        //APPTIVIDAD
+        cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
         cy.wait("@apptividad", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -905,14 +947,14 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         // Biometria
+        cy.wait(10000);
         cy.get('p[class="titleTutorialCedulaICB"]')
           .eq(1)
           .should("have.text", "Tómate una selfie, tal y como lo ves");
-        cy.wait(8000);
         cy.get("[data-test=iniciar-captura-unificado]").click({
           timeout: 6000,
         });
-        cy.wait(20000);
+        cy.wait(90000);
         cy.get("[data-test=siguiente-biometria-unificado]").click();
         cy.wait("@biometria", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -924,6 +966,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //Direccion
+        cy.wait(10000);
         cy.get('p[class="subtitleTuDireccion"]').should(
           "have.text",
           " Ahora necesitamos tu teléfono celular y tus datos residenciales: "
@@ -968,6 +1011,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //TDD
+        cy.wait(10000);
         cy.wait("@seguro", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
@@ -1062,6 +1106,9 @@ export function FLUJOSCOMPLETOS(e2e) {
             expect(xhr.responseBody.HttpResponse.code).to.eq(200);
             expect(xhr.responseBody.HttpResponse.message).to.eq("Ok");
           });
+
+          //DECLARACION JURADA
+        cy.wait(10000);
         cy.get("[data-test=situacion-laboral-select]")
           .should("be.visible")
           .select("ASALARIADO");
@@ -1101,9 +1148,9 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.OnboardingProspectData.prospectSave).to.eq(true);
           expect(xhr.responseBody.OnboardingProspectData.serviceResponse).to.eq(true);
         });
-        cy.wait(3000)
 
         //Carga de documentos
+        cy.wait(10000);
         cy.get('.col-lg-9 > .container-fluid > :nth-child(1)').contains('Antes de continuar, necesito que nos proporciones los siguientes datos que completarán la prueba de tus ingresos')
         const CTRABAJO = "ctrabajo.pdf";
         const DRENTA = "drenta.pdf";
@@ -1124,7 +1171,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //Beneficiarios
-        cy.wait(3000)
+        cy.wait(10000);
         cy.get('.pb-0').contains('Queremos resguardar tus intereses. En caso de que te ausentes, coméntanos a quién dejarías estos fondos ')
         cy.wait("@beneficiariosPaises", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -1179,8 +1226,12 @@ export function FLUJOSCOMPLETOS(e2e) {
 
     it("Cuenta Multipanama", () => {
       cy.fixture("index").then((index) => {
+        // INICIO
+        cy.wait(10000);
         cy.get("[data-test=comencemos_btn]").should("be.visible").click();
-        cy.wait(7000);
+
+        // LOGUIN
+        cy.wait(10000);
         cy.get("[data-test=insertar-correo]").should("be.visible").click();
         cy.get("[data-test=insertar-correo]")
           .should("be.visible")
@@ -1201,8 +1252,13 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingParametersData.data.documenttyped).to.eq('CUENTA DE AHORRO MULTIPANAMA'); 
       });
-        cy.wait(5000);
+
+        //  CARACTERISTICAS DE PRODUCTO
+        cy.wait(10000);
         cy.get("[data-test=quiero-mi-cuenta-btn]").should("be.visible").click();
+      
+        // PREGUNTAS REGULATORIAS
+        cy.wait(10000);
         cy.get("[data-test=no-fatca-btn]").click();
         cy.get("[data-test=no-fis]").click();
         cy.get("[data-test=no-pep]").click();
@@ -1212,6 +1268,8 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
         });
+
+        // OCR
         cy.wait(20000);
         cy.get("[data-test=ocr-unificado-siguiente]").click();
         cy.wait("@Ocr", { timeout: 60000 }).then((xhr) => {
@@ -1219,7 +1277,9 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-        cy.wait(3000);
+        
+        // DATOS GENERALES
+        cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
         cy.get(":nth-child(2) > .form-control").clear();
         cy.get('input[formcontrolname="FechaNacimiento"]').clear();
@@ -1261,7 +1321,9 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-        cy.wait(3000);
+        
+        // APPTIVIDAD
+        cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
         cy.wait("@apptividad", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -1273,14 +1335,14 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         // Biometria
+        cy.wait(10000);
         cy.get('p[class="titleTutorialCedulaICB"]')
           .eq(1)
           .should("have.text", "Tómate una selfie, tal y como lo ves");
-        cy.wait(8000);
         cy.get("[data-test=iniciar-captura-unificado]").click({
           timeout: 6000,
         });
-        cy.wait(20000);
+        cy.wait(90000);
         cy.get("[data-test=siguiente-biometria-unificado]").click();
         cy.wait("@biometria", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -1292,6 +1354,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //Direccion
+        cy.wait(10000);
         cy.get('p[class="subtitleTuDireccion"]').should(
           "have.text",
           " Ahora necesitamos tu teléfono celular y tus datos residenciales: "
@@ -1336,6 +1399,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //TDD
+        cy.wait(10000);
         cy.wait("@seguro", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
@@ -1430,6 +1494,9 @@ export function FLUJOSCOMPLETOS(e2e) {
             expect(xhr.responseBody.HttpResponse.code).to.eq(200);
             expect(xhr.responseBody.HttpResponse.message).to.eq("Ok");
           });
+
+          // DECLARACION JURADA
+        cy.wait(10000);
         cy.get("[data-test=situacion-laboral-select]")
           .should("be.visible")
           .select("ASALARIADO");
@@ -1469,9 +1536,9 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.OnboardingProspectData.prospectSave).to.eq(true);
           expect(xhr.responseBody.OnboardingProspectData.serviceResponse).to.eq(true);
         });
-        cy.wait(3000)
 
         //Carga de documentos
+        cy.wait(10000);
         cy.get('.col-lg-9 > .container-fluid > :nth-child(1)').contains('Antes de continuar, necesito que nos proporciones los siguientes datos que completarán la prueba de tus ingresos')
         const CTRABAJO = "ctrabajo.pdf";
         const DRENTA = "drenta.pdf";
@@ -1492,7 +1559,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //Beneficiarios
-        cy.wait(3000)
+        cy.wait(10000);
         cy.get('.pb-0').contains('Queremos resguardar tus intereses. En caso de que te ausentes, coméntanos a quién dejarías estos fondos ')
         cy.wait("@beneficiariosPaises", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -1544,15 +1611,19 @@ export function FLUJOSCOMPLETOS(e2e) {
         cy.screenshot("BENEFICIARIOS/contracto.png");
        });
     });
-
+*/
     it("Cuenta Multititular Principal", () => {
       cy.fixture("index").then((index) => {
+        // INICIO
+        cy.wait(10000);
         cy.get("[data-test=comencemos_btn]").should("be.visible").click();
-        cy.wait(7000);
+
+        // LOGUIN
+        cy.wait(10000);
         cy.get("[data-test=insertar-correo]").should("be.visible").click();
         cy.get("[data-test=insertar-correo]")
           .should("be.visible")
-          .type(e2e.datosUsuario.emailCtaMultititular00);
+          .type(e2e.datosUsuario.emailCtaMultititular0);
         cy.get("[data-test=insertar-ccdigo]").should("be.visible").click();
         cy.get("[data-test=insertar-ccdigo]")
           .should("be.visible")
@@ -1569,8 +1640,13 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingParametersData.data.documenttyped).to.eq('CUENTA DE AHORRO MULTI TITULAR'); 
       });
-        cy.wait(5000);
+        
+      // CARACTERISTICAS DE PRODUCTOS
+        cy.wait(10000);
         cy.get("[data-test=quiero-mi-cuenta-btn]").should("be.visible").click();
+
+        // PREGUNTAS REGULATORIAS
+        cy.wait(10000);
         cy.get("[data-test=no-fatca-btn]").click();
         cy.get("[data-test=no-fis]").click();
         cy.get("[data-test=no-pep]").click();
@@ -1580,6 +1656,8 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
         });
+
+        // OCR
         cy.wait(20000);
         cy.get("[data-test=ocr-unificado-siguiente]").click();
         cy.wait("@Ocr", { timeout: 60000 }).then((xhr) => {
@@ -1587,7 +1665,9 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-        cy.wait(3000);
+        
+        // DATOS GENERALES
+        cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
         cy.get(":nth-child(2) > .form-control").clear();
         cy.get('input[formcontrolname="FechaNacimiento"]').clear();
@@ -1629,7 +1709,9 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-        cy.wait(3000);
+        
+        // APPTIVIDAD
+        cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
         cy.wait("@apptividad", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -1641,14 +1723,14 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         // Biometria
+        cy.wait(10000);
         cy.get('p[class="titleTutorialCedulaICB"]')
           .eq(1)
           .should("have.text", "Tómate una selfie, tal y como lo ves");
-        cy.wait(8000);
         cy.get("[data-test=iniciar-captura-unificado]").click({
           timeout: 6000,
         });
-        cy.wait(20000);
+        cy.wait(90000);
         cy.get("[data-test=siguiente-biometria-unificado]").click();
         cy.wait("@biometria", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -1660,6 +1742,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //Direccion
+        cy.wait(10000);
         cy.get('p[class="subtitleTuDireccion"]').should(
           "have.text",
           " Ahora necesitamos tu teléfono celular y tus datos residenciales: "
@@ -1704,6 +1787,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //TDD
+        cy.wait(10000);
         cy.wait("@seguro", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
@@ -1798,6 +1882,9 @@ export function FLUJOSCOMPLETOS(e2e) {
             expect(xhr.responseBody.HttpResponse.code).to.eq(200);
             expect(xhr.responseBody.HttpResponse.message).to.eq("Ok");
           });
+
+         // DECLARACION JURADA
+        cy.wait(10000); 
         cy.get("[data-test=situacion-laboral-select]")
           .should("be.visible")
           .select("ASALARIADO");
@@ -1837,9 +1924,9 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.OnboardingProspectData.prospectSave).to.eq(true);
           expect(xhr.responseBody.OnboardingProspectData.serviceResponse).to.eq(true);
         });
-        cy.wait(3000)
 
         //Carga de documentos
+        cy.wait(10000);
         cy.get('.col-lg-9 > .container-fluid > :nth-child(1)').contains('Antes de continuar, necesito que nos proporciones los siguientes datos que completarán la prueba de tus ingresos')
         const CTRABAJO = "ctrabajo.pdf";
         const DRENTA = "drenta.pdf";
@@ -1884,12 +1971,17 @@ export function FLUJOSCOMPLETOS(e2e) {
 
     it("Cuenta Multititular secundario", () => {
       cy.fixture("index").then((index) => {
+
+        // inicio
+        cy.wait(10000);
         cy.get("[data-test=comencemos_btn]").should("be.visible").click();
-        cy.wait(7000);
+
+        // Loguin
+        cy.wait(10000);
         cy.get("[data-test=insertar-correo]").should("be.visible").click();
         cy.get("[data-test=insertar-correo]")
           .should("be.visible")
-          .type(e2e.datosUsuario.emailCtaMultititular01);
+          .type(e2e.datosUsuario.emailCtaMultititular1);
         cy.get("[data-test=insertar-ccdigo]").should("be.visible").click();
         cy.get("[data-test=insertar-ccdigo]")
           .should("be.visible")
@@ -1906,8 +1998,13 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingParametersData.data.documenttyped).to.eq('CUENTA DE AHORRO MULTI TITULAR'); 
       });
-        cy.wait(5000);
+
+      // CARACTERISTICAS DE PRODUCTO
+        cy.wait(10000);
         cy.get("[data-test=quiero-mi-cuenta-btn]").should("be.visible").click();
+
+        // PREGUNTAS REGULATORIAS
+        cy.wait(10000);
         cy.get("[data-test=no-fatca-btn]").click();
         cy.get("[data-test=no-fis]").click();
         cy.get("[data-test=no-pep]").click();
@@ -1917,6 +2014,8 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
         });
+
+        // OCR
         cy.wait(20000);
         cy.get("[data-test=ocr-unificado-siguiente]").click();
         cy.wait("@Ocr", { timeout: 60000 }).then((xhr) => {
@@ -1924,7 +2023,10 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-        cy.wait(3000);
+        
+        
+        // DATOS GENERALES
+        cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
         cy.get(":nth-child(2) > .form-control").clear();
         cy.get('input[formcontrolname="FechaNacimiento"]').clear();
@@ -1966,7 +2068,9 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-        cy.wait(3000);
+        
+        // APPTIVIDAD
+        cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
         cy.wait("@apptividad", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -1978,14 +2082,14 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         // Biometria
+        cy.wait(10000);
         cy.get('p[class="titleTutorialCedulaICB"]')
           .eq(1)
           .should("have.text", "Tómate una selfie, tal y como lo ves");
-        cy.wait(8000);
         cy.get("[data-test=iniciar-captura-unificado]").click({
           timeout: 6000,
         });
-        cy.wait(20000);
+        cy.wait(90000);
         cy.get("[data-test=siguiente-biometria-unificado]").click();
         cy.wait("@biometria", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -1997,6 +2101,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //Direccion
+        cy.wait(10000);
         cy.get('p[class="subtitleTuDireccion"]').should(
           "have.text",
           " Ahora necesitamos tu teléfono celular y tus datos residenciales: "
@@ -2041,6 +2146,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //TDD
+        cy.wait(10000);
         cy.wait("@seguro", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
@@ -2135,6 +2241,9 @@ export function FLUJOSCOMPLETOS(e2e) {
             expect(xhr.responseBody.HttpResponse.code).to.eq(200);
             expect(xhr.responseBody.HttpResponse.message).to.eq("Ok");
           });
+        
+        // DECLARACION JURADA
+        cy.wait(10000);
         cy.get("[data-test=situacion-laboral-select]")
           .should("be.visible")
           .select("ASALARIADO");
@@ -2171,9 +2280,9 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.OnboardingProspectData.prospectSave).to.eq(true);
           expect(xhr.responseBody.OnboardingProspectData.serviceResponse).to.eq(true);
         });
-        cy.wait(3000)
 
         //Carga de documentos
+        cy.wait(10000);
         cy.get('.col-lg-9 > .container-fluid > :nth-child(1)').contains('Antes de continuar, necesito que nos proporciones los siguientes datos que completarán la prueba de tus ingresos')
         const CTRABAJO = "ctrabajo.pdf";
         const DRENTA = "drenta.pdf";
@@ -2214,11 +2323,15 @@ export function FLUJOSCOMPLETOS(e2e) {
         cy.screenshot("BENEFICIARIOS/contracto.png");
        });
     });
-
+/*
     it("Cuenta simplificada", () => {
       cy.fixture("index").then((index) => {
+        // INICIO
+        cy.wait(10000);
         cy.get("[data-test=comencemos_btn]").should("be.visible").click();
-        cy.wait(7000);
+
+        // LOGUIN
+        cy.wait(10000);
         cy.get("[data-test=insertar-correo]").should("be.visible").click();
         cy.get("[data-test=insertar-correo]")
           .should("be.visible")
@@ -2238,9 +2351,14 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingParametersData.data.documenttyped).to.eq('CUENTA DE AHORROS SIMPLIFICADA'); 
-      });
-        cy.wait(5000);
+        });
+        
+        // CARACTERISTICAS DE PRODUCTO
+        cy.wait(10000);
         cy.get("[data-test=quiero-mi-cuenta-btn]").should("be.visible").click();
+
+        // PREGUNTAS REGULATORIAS
+        cy.wait(10000);
         cy.get("[data-test=no-fatca-btn]").click();
         cy.get("[data-test=no-fis]").click();
         cy.get("[data-test=no-pep]").click();
@@ -2250,6 +2368,8 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
         });
+
+        // OCR
         cy.wait(20000);
         cy.get("[data-test=ocr-unificado-siguiente]").click();
         cy.wait("@Ocr", { timeout: 60000 }).then((xhr) => {
@@ -2257,7 +2377,9 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-        cy.wait(3000);
+        
+        // DATOS GENERALES
+        cy.wait(10000);
         //cy.get(":nth-child(1) > .form-control").clear();
         //cy.get(":nth-child(2) > .form-control").clear();
         cy.get('input[formcontrolname="FechaNacimiento"]').clear();
@@ -2292,7 +2414,9 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-        cy.wait(3000);
+        
+        // APPTIVIDAD
+        cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
         cy.wait("@apptividad", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -2304,14 +2428,14 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         // Biometria
+        cy.wait(10000);
         cy.get('p[class="titleTutorialCedulaICB"]')
           .eq(1)
           .should("have.text", "Tómate una selfie, tal y como lo ves");
-        cy.wait(8000);
         cy.get("[data-test=iniciar-captura-unificado]").click({
           timeout: 6000,
         });
-        cy.wait(20000);
+        cy.wait(90000);
         cy.get("[data-test=siguiente-biometria-unificado]").click();
         cy.wait("@biometria", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -2323,6 +2447,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //Direccion
+        cy.wait(10000);
         cy.get('p[class="subtitleTuDireccion"]').should(
           "have.text",
           " Ahora necesitamos tu teléfono celular y tus datos residenciales: "
@@ -2367,6 +2492,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
 
         //TDD
+        cy.wait(10000);
         cy.get("[data-test=btn-quiero-tarjeta]").should("be.visible").click();
         
         cy.wait("@negocios", { timeout: 60000 }).then((xhr) => {
@@ -2405,6 +2531,9 @@ export function FLUJOSCOMPLETOS(e2e) {
               "Ok"
             );
           });
+
+        // DECLARACION JURADA
+        cy.wait(10000);
         cy.get("[data-test=situacion-laboral-select]")
           .should("be.visible")
           .select("ASALARIADO");
@@ -2421,6 +2550,8 @@ export function FLUJOSCOMPLETOS(e2e) {
           .should("be.visible")
           .select("SOLTERO(A)");
         cy.get('[data-test=generar-contrato-btn]').should("be.visible").click()
+
+        // CONTRACTO
         cy.wait(10000)
         cy.wait("@actualizarprospectsimpli", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
@@ -2446,6 +2577,6 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
         cy.screenshot("BENEFICIARIOS/contracto.png");
        });
-    });
+    });*/
   })
 }

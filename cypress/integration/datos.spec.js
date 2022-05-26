@@ -1,3 +1,4 @@
+import {FLUJOSCOMPLETOS} from "./E2e-Cedulas"
 /*import {LOGUIN} from "./caso1_loguinValidaciones";
 import {PROD_TEMPLATES} from "./caso2_templatesProductos";
 import {KOPEP} from "./caso3-koPep_koFampep";
@@ -8,13 +9,11 @@ import { DIRECCION } from "./caso7-Direccion";
 import { TDD } from "./caso8-tdd";
 import { DECLARACIONJURADA } from "./caso9-declaracionJurada";
 import { BENEFICIARIOS } from "./caso10-beneficiarios";*/
-import {FLUJOSCOMPLETOS} from "./E2e-Cedulas"
-
 
 const loguin = {
   datosUsuario: {
     email: "prueba179@yopmail.com",
-    code: "898588",
+    code: "379382",
     emailfalso: "noemi@correofalso.com",
   },
 };
@@ -22,33 +21,33 @@ const loguin = {
 const Tem_Productos = {
   datosUsuario: {
     emailSimplificada: "csimplificada@yopmail.com",
-    codesimplificada: "588769",
+    codesimplificada: "667547",
     emailAhorro: "cahorro@yopmail.com",
-    codeAhorro: "542832",
+    codeAhorro: "592359",
     emailEuros: "ceuros@yopmail.com",
-    codeEuros: "877448",
+    codeEuros: "838499",
     emailCorriente: "ccorriente@yopmail.com",
-    codeCorriente: "393728",
+    codeCorriente: "639976",
     emailmultipanama: "cmultipanama@yopmail.com",
-    codemultipanama: "942786",
+    codemultipanama: "474494",
     emailmultitular: "cmultititular@yopmail.com",
-    codeMultititular: "767859"
+    codeMultititular: "949852"
   },
 };
 
 const casepep = {
   datosUsuario: {
     emailfampep: "prueba178@yopmail.com",
-    codefampep: "323285",
+    codefampep: "377456",
     email: "prueba177@yopmail.com",
-    code: "269252",
+    code: "562872",
   },
 };
 
 const ocr = {
   datosUsuario: {
     email: "ocrtest@yopmail.com",
-    code: "293947",
+    code: "486532",
     nombres: "Michael Alejandro",
     apellidos: "Abril Marmolejo",
     fechaNacimiento: "13061994",
@@ -61,7 +60,7 @@ const ocr = {
 const apptividad = {
   datosUsuario: {
     email: "apptividad@yopmail.com",
-    code: "552285",
+    code: "969655",
     nombres: "Michael Alejandro",
     apellidos: "Abril Marmolejo",
     fechaNacimiento: "13061994",
@@ -74,7 +73,7 @@ const apptividad = {
 const biometria = {
   datosUsuario: {
     email: "biometria@yopmail.com",
-    code: "523462",
+    code: "447324",
     nombres: "Michael Alejandro",
     apellidos: "Abril Marmolejo",
     fechaNacimiento: "13061994",
@@ -87,7 +86,7 @@ const biometria = {
 const direccion = {
   datosUsuario: {
     email: "direccion@yopmail.com",
-    code: "779376",
+    code: "565864",
     nombres: "Michael Alejandro",
     apellidos: "Abril Marmolejo",
     fechaNacimiento: "13061994",
@@ -110,7 +109,7 @@ const direccion = {
 const tdd = {
   datosUsuario: {
     email: "tdd@yopmail.com",
-    code: "779376",
+    code: "472828",
     nombres: "Michael Alejandro",
     apellidos: "Abril Marmolejo",
     fechaNacimiento: "13061994",
@@ -134,7 +133,7 @@ const tdd = {
 const declaracionJurada = {
   datosUsuario: {
     email: "declaracionJurada@yopmail.com",
-    code: "384225",
+    code: "792947",
     nombres: "Michael Alejandro",
     apellidos: "Abril Marmolejo",
     fechaNacimiento: "13061994",
@@ -175,7 +174,7 @@ const declaracionJurada = {
 const beneficiarios = {
   datosUsuario: {
     email: "beneficiarios@yopmail.com",
-    code: "264983",
+    code: "876597",
     nombres: "Michael Alejandro",
     apellidos: "Abril Marmolejo",
     fechaNacimiento: "13061994",
@@ -225,13 +224,13 @@ const beneficiarios = {
 
 const e2e = {
   datosUsuario: {
-    emailCtaAhorro: "ctaAhorro@yopmail.com", codeCtaAhorro: "586895",
-    emailCtaEuro:"ctaEuros@yopmail.com", codeCtaEuro: "656984",
-    emailCtaCorriente: "ctaCorriente@yopmail.com", codeCtaCorriente: "396963",
-    emailCtaMultipanama:"ctaMultipanama@yopmail.com", codeCtaMultipanama: "347398",
-    emailCtaMultititular00: "ctaMultititular00@yopmail.com", codeCtaMultititular00: "292599",
-    emailCtaMultititular01: "ctaMultititular01@yopmail.com", codeCtaMultititular01: "889536",
-    emailCtaSimplificada:"ctaSimplificada@yopmail.com", codeCtasimplificada: "276783",
+    emailCtaAhorro: "ctaAhorro01@yopmail.com", codeCtaAhorro: "866489",
+    emailCtaEuro:"ctaEuros@yopmail.com", codeCtaEuro: "337863",
+    emailCtaCorriente: "ctaCorriente01@yopmail.com", codeCtaCorriente: "749354",
+    emailCtaMultipanama:"ctaMultipanama@yopmail.com", codeCtaMultipanama: "753543",
+    emailCtaMultititular0: "ctaMultititular0@yopmail.com", codeCtaMultititular00: "596296",
+    emailCtaMultititular1: "ctaMultititular1@yopmail.com", codeCtaMultititular01: "592445",
+    emailCtaSimplificada:"ctaSimplificada@yopmail.com", codeCtasimplificada: "379336",
     nombres: "Michael Alejandro",
     apellidos: "Abril Marmolejo",
     fechaNacimiento: "13061994",
@@ -278,7 +277,9 @@ const e2e = {
     Bemail: "mabril@test.com",
   },
 };
+
 var planilla = [declaracionJurada, casepep];
+FLUJOSCOMPLETOS (e2e)
 /*LOGUIN(loguin)
 PROD_TEMPLATES(Tem_Productos)
 KOPEP(casepep)
@@ -289,5 +290,5 @@ DIRECCION(direccion);
 TDD(tdd);
 DECLARACIONJURADA(declaracionJurada);
 BENEFICIARIOS(beneficiarios);*/
-FLUJOSCOMPLETOS (e2e)
+
 //PLANILLA(planilla)
