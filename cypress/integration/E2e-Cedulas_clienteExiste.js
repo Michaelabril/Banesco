@@ -73,7 +73,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         expect(response.body.HttpResponse.code).to.eq(200);
       }); //cierre de wsdatacleaner
     });*/
-/*
+
     it("Cuenta Ahorro", () => {
       cy.fixture("index").then((index) => {
         cy.wait(10000);
@@ -95,6 +95,8 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingEmailData.code).to.eq("Ok");
+          expect(xhr.responseBody.OnboardingEmailData.clientExist).to.eq(true);
+          expect(xhr.responseBody.OnboardingEmailData.serviceResponse).to.eq(true);
         });
         cy.wait('@wsconsultparameters', { timeout: 60000 }).then(xhr => {
           expect(xhr.status).to.eq(200);
@@ -115,6 +117,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         cy.wait("@FatcaPep", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(xhr.responseBody.OnboardingFatcaData.serviceResponse).to.eq(true);
         });
 
         //Pantalla de captura identificacion cedula
@@ -125,7 +128,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-
+/*
         // Pantalla de Datos generales
         cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
@@ -168,7 +171,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.OnboardingValidateData.serviceResponse).to.eq(
             true
           );
-        });
+        });*/
         // Pantalla de APPTIVIDAD
         cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
@@ -176,9 +179,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnboardingApptivityData.code).to.eq("Ok");
-          expect(
-            xhr.responseBody.OnboardingApptivityData.serviceResponse
-          ).to.eq(true);
+          expect(xhr.responseBody.OnboardingApptivityData.serviceResponse).to.eq(true);
         });
 
         // Biometria
@@ -206,7 +207,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           "have.text",
           " Ahora necesitamos tu teléfono celular y tus datos residenciales: "
         );
-        cy.get("[data-test=country]").should("be.visible").select("VENEZUELA");
+        //cy.get("[data-test=country]").should("be.visible").select("VENEZUELA");
         cy.get("[data-test=distrito-select]")
           .should("be.visible")
           .select("MIRANDA");
@@ -484,7 +485,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.OnboardingParametersData.data.documenttyped).to.eq('CUENTA DE AHORRO EN EUROS'); 
       });
         //Pantalla de TEMPLATE DE PRODUCTO
-        cy.wait(10000);
+       /* cy.wait(10000);
         cy.get("[data-test=quiero-mi-cuenta-btn]").should("be.visible").click();
         //Pantalla de PREGUNTAS REGULATORIAS
         cy.wait(10000);
@@ -496,7 +497,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         cy.wait("@FatcaPep", { timeout: 60000 }).then((xhr) => {
           expect(xhr.status).to.eq(200);
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-        });
+        });*/
         ///Pantalla de ocr
         cy.wait(20000);
         cy.get("[data-test=ocr-unificado-siguiente]").click();
@@ -505,6 +506,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
+        /*
         //Pantalla de Datos genereales
         cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
@@ -548,6 +550,7 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
+        */
         //Pantalla de APPTIVIDAD
         cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
@@ -610,9 +613,9 @@ export function FLUJOSCOMPLETOS(e2e) {
         cy.get(".col-md-6.ng-star-inserted > [data-test=cellphone-input]")
           .should("be.visible")
           .type(e2e.direccion.telefonoCelular);
-        cy.get(".col-md-12 > [data-test=cellphone-input]")
+        /*cy.get(".col-md-12 > [data-test=cellphone-input]")
           .should("be.visible")
-          .type(e2e.direccion.puntoReferencia);
+          .type(e2e.direccion.puntoReferencia);*/
         cy.get("[data-test=siguiente-direccion-btn]")
           .should("be.visible")
           .click();
@@ -889,7 +892,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-
+/*
         //Datos Generales
         cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
@@ -933,7 +936,7 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-
+*/
         //APPTIVIDAD
         cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
@@ -1277,7 +1280,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-        
+        /*
         // DATOS GENERALES
         cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
@@ -1321,7 +1324,7 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-        
+        */
         // APPTIVIDAD
         cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
@@ -1611,7 +1614,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         cy.screenshot("BENEFICIARIOS/contracto.png");
        });
     });
-*/
+
     it("Cuenta Multititular Principal", () => {
       cy.fixture("index").then((index) => {
         // INICIO
@@ -1665,7 +1668,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-        
+        /*
         // DATOS GENERALES
         cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
@@ -1709,7 +1712,7 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-        
+        */
         // APPTIVIDAD
         cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
@@ -2023,8 +2026,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-        
-        
+        /*
         // DATOS GENERALES
         cy.wait(10000);
         cy.get(":nth-child(1) > .form-control").clear();
@@ -2068,7 +2070,7 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-        
+        */
         // APPTIVIDAD
         cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
@@ -2323,7 +2325,7 @@ export function FLUJOSCOMPLETOS(e2e) {
         cy.screenshot("BENEFICIARIOS/contracto.png");
        });
     });
-/*
+
     it("Cuenta simplificada", () => {
       cy.fixture("index").then((index) => {
         // INICIO
@@ -2377,7 +2379,7 @@ export function FLUJOSCOMPLETOS(e2e) {
           expect(xhr.responseBody.HttpResponse.code).to.eq(200);
           expect(xhr.responseBody.OnBoardingOcrData.code).to.eq("OK");
         });
-        
+        /*
         // DATOS GENERALES
         cy.wait(10000);
         //cy.get(":nth-child(1) > .form-control").clear();
@@ -2414,7 +2416,7 @@ export function FLUJOSCOMPLETOS(e2e) {
             true
           );
         });
-        
+        */
         // APPTIVIDAD
         cy.wait(10000);
         cy.get("[data-test=apptividad-acepto-btn]").click();
@@ -2577,6 +2579,6 @@ export function FLUJOSCOMPLETOS(e2e) {
         });
         cy.screenshot("BENEFICIARIOS/contracto.png");
        });
-    });*/
+    });
   })
 }
