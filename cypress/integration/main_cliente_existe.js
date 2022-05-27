@@ -2,13 +2,13 @@ import {FLUJOSCOMPLETOS} from "./E2e-Cedulas_clienteExiste"
 
 const e2e = {
   datosUsuario: {
-    emailCtaAhorro: "tesqa99@yopmail.com", codeCtaAhorro: "646323",
-    emailCtaEuro:"ctaEuros@yopmail.com", codeCtaEuro: "337863",
-    emailCtaCorriente: "ctaCorriente01@yopmail.com", codeCtaCorriente: "749354",
-    emailCtaMultipanama:"ctaMultipanama@yopmail.com", codeCtaMultipanama: "753543",
+    emailCtaSimplificada:"ctaSimplificadaCteExiste@yopmail.com", codeCtasimplificada: "469669",
+    emailCtaAhorro: "ctaahorroCteExiste@yopmail.com", codeCtaAhorro: "232843",
+    emailCtaEuro:"ctaEurosCteExiste@yopmail.com", codeCtaEuro: "398869",
+    emailCtaCorriente: "ctaCorrienteCteExiste@yopmail.com", codeCtaCorriente: "387288",
+    emailCtaMultipanama:"ctaMultipanamaCteExiste@yopmail.com", codeCtaMultipanama: "875422",
     emailCtaMultititular0: "ctaMultititular0@yopmail.com", codeCtaMultititular00: "596296",
     emailCtaMultititular1: "ctaMultititular1@yopmail.com", codeCtaMultititular01: "592445",
-    emailCtaSimplificada:"ctaSimplificada@yopmail.com", codeCtasimplificada: "379336",
     nombres: "Michael Alejandro",
     apellidos: "Abril Marmolejo",
     fechaNacimiento: "13061994",

@@ -7,7 +7,7 @@ const e2e = {
     emailCtaCorriente: "ctaCorriente01@yopmail.com", codeCtaCorriente: "749354",
     emailCtaMultipanama:"ctaMultipanama@yopmail.com", codeCtaMultipanama: "753543",
     emailCtaMultititular0: "ctaMultititular0@yopmail.com", codeCtaMultititular00: "596296",
-    emailCtaMultititular1: "ctaMultititular1@yopmail.com", codeCtaMultititular01: "592445",
+    emailCtaMultititular1: "testmultitular02@yopmail.com", codeCtaMultititular01: "745858",
     emailCtaSimplificada:"ctaSimplificada@yopmail.com", codeCtasimplificada: "379336",
     nombres: "Michael Alejandro",
     apellidos: "Abril Marmolejo",
