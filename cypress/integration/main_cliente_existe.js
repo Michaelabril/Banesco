@@ -2,13 +2,15 @@ import {FLUJOSCOMPLETOS} from "./E2e-Cedulas_clienteExiste"
 
 const e2e = {
   datosUsuario: {
-    emailCtaSimplificada:"ctaSimplificadaCteExiste@yopmail.com", codeCtasimplificada: "469669",
-    emailCtaAhorro: "ctaahorroCteExiste@yopmail.com", codeCtaAhorro: "232843",
-    emailCtaEuro:"ctaEurosCteExiste@yopmail.com", codeCtaEuro: "398869",
-    emailCtaCorriente: "ctaCorrienteCteExiste@yopmail.com", codeCtaCorriente: "387288",
-    emailCtaMultipanama:"ctaMultipanamaCteExiste@yopmail.com", codeCtaMultipanama: "875422",
-    emailCtaMultititular0: "ctaMultititular0@yopmail.com", codeCtaMultititular00: "596296",
-    emailCtaMultititular1: "ctaMultititular1@yopmail.com", codeCtaMultititular01: "592445",
+    emailCtaSimplificada:"ctaSimplificada@yopmail.com", codeCtasimplificada: "645664",
+    emailCtaAhorro: "ctaAhorro01@yopmail.com", codeCtaAhorro: "224397",
+    emailCtaEuro:"ctaEuros@yopmail.com", codeCtaEuro: "398869",
+    emailCtaCorriente: "ctaCorriente@yopmail.com", codeCtaCorriente: "736588",
+    emailCtaMultipanama:"ctaMultipanama@yopmail.com", codeCtaMultipanama: "868467",
+    emailCtaMultititular0: "testmultitular01@yopmail.com", codeCtaMultititular00: "338656",
+    emailCtaMultititular1: "testmultitular02@yopmail.com", codeCtaMultititular01: "798778",
+    emailCtaMultititular2: "testmultitular03@yopmail.com", codeCtaMultititular02: "857682",
+    
     nombres: "Michael Alejandro",
     apellidos: "Abril Marmolejo",
     fechaNacimiento: "13061994",
