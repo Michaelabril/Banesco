@@ -8,7 +8,7 @@ const e2e = {
     emailCtaMultipanama: "ctaMultipanama08@yopmail.com", codeCtaMultipanama: "677944",
     emailCtaSimplificada: "ctaSimplificada03@yopmail.com", codeCtasimplificada: "772385",
     emailCtaMenorEdad: "mabrilhnl@gmail.com", codeCtaMenorEdad: "842747",
-    emailfatcaPep: "mabrilhnl@gmail.com", codefatcaPep: "842747",
+    emailfatcaPep: "fatcapepfampepcrs@yopmail.com	", codefatcaPep: "549882",
     emailCtaMultititular0: "multititularcrs@yopmail.com", codeCtaMultititular00: "985745",
     emailCtaMultititular1: "multititularcrs4@yopmail.com", codeCtaMultititular01: "483387",
     nombres: "MARIA CARMEN",

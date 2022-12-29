@@ -853,7 +853,6 @@ Cypress.Commands.add("FATCA", () => {
   cy.wait(10000);
   const form_W9 = "w9_form.pdf";
   cy.get('[data-test="input-carga-documento"]').attachFile(form_W9);
-  cy.wait(1000);
   cy.screenshot("E2E/Fatca");
   cy.get('[data-test="fatcapep-btn-siguiente"]').click();
   cy.wait(20000);
