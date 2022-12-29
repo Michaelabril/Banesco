@@ -10,3 +10,5 @@ cypress
 npm
 
 Nota: se debe utilizar un convertidor de arhivos .y4m para los procesos de captura de imagenes
+
+Author:Michael Abril
