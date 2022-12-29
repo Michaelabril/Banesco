@@ -1,0 +1,6 @@
+/node_modules
+/package-lock.json
+/package.json
+/cypress/fixtures/test2.y4m
+/cypress/fixtures/testQA.mp4
+/cypress/screenshots

@@ -1,0 +1,32 @@
+[
+    {
+    "inputPasswordmain":"#mat-input-0",
+    "btnSiguiente":"#form > .mat-focus-indicator > .mat-button-wrapper",
+    "datefoundationoperation":"#mat-input-2",
+    "dateMainOperation":"#mat-input-3",
+    "CompanyActivity":"#mat-select-value-1",
+    "TypeCompany":"#mat-select-value-5",
+    "IndustryCode":"#mat-select-value-7",
+    "ZonaFrancaOperation":"#mat-select-value-9",
+    "TypeSociety":"#mat-select-value-11"
+    },
+    
+    {
+    "emailCtaAhorro": "ctaAhorro02@yopmail.com", "codeCtaAhorro": "437622",
+    "emailCtaEuro":"ctaEuros02@yopmail.com", "codeCtaEuro": "326286",
+    "emailCtaCorriente": "ctaCorriente04@yopmail.com", "codeCtaCorriente": "227668",
+    "emailCtaMultipanama":"ctaMultipanama03@yopmail.com", "codeCtaMultipanama": "252658",
+    "emailCtaMultititular0": "multititularcrs@yopmail.com", "codeCtaMultititular00": "985745",
+    "emailCtaMultititular1": "multititularcrs4@yopmail.com", "codeCtaMultititular01": "483387",
+    "emailCtaSimplificada":"ctaSimplificada02@yopmail.com", "codeCtasimplificada": "964929",
+    "nombres": "MARIA CARMEN",
+    "nombre2":" OMAIRA",
+    "apellidos": "DE LA TORRE ",
+    "apellido2": "PAZ ",
+    "ApellidoCasada": "DE RODRIGUEZ",
+    "fechaNacimiento": "13061994",
+    "fechaexpedicion": "12122020",
+    "fechaVencimiento": "12122030",
+    "numeroRif": "V-23456756-2"
+    }
+]
