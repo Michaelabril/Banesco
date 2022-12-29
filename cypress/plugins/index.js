@@ -25,7 +25,7 @@ module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // Windows
-      launchOptions.args.push('--use-file-for-fake-video-capture=C:/Users/MichaelAbril/Automatizacion/Banca Internacional/cypress/fixtures/test2.y4m')
+      launchOptions.args.push('--use-file-for-fake-video-capture=C:/Users/MichaelAbril/Banesco/cypress/fixtures/test2.y4m')
     }
     return launchOptions
   })

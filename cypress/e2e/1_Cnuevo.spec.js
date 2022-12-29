@@ -2,14 +2,15 @@ import { FLUJOSCOMPLETOS } from "./E2e-Cedulas_cliente Nuevo"
 
 const e2e = {
   datosUsuario: {
-    emailCtaAhorro: "ctaAhorro07@yopmail.com", codeCtaAhorro: "466478",
-    emailCtaEuro: "ctaEuros044@yopmail.com", codeCtaEuro: "937298",
-    emailCtaCorriente: "ctaCorriente04@yopmail.com", codeCtaCorriente: "269256",
-    emailCtaMultipanama: "prueba02.hnl@gmail.com", codeCtaMultipanama: "724579",
+    emailCtaAhorro: "ctaAhorro07@yopmail.com", codeCtaAhorro: "744262",
+    emailCtaEuro: "ctaEuros044@yopmail.com", codeCtaEuro: "397928",
+    emailCtaCorriente: "ctaCorriente04@yopmail.com", codeCtaCorriente: "992957",
+    emailCtaMultipanama: "ctaMultipanama08@yopmail.com", codeCtaMultipanama: "677944",
+    emailCtaSimplificada: "ctaSimplificada03@yopmail.com", codeCtasimplificada: "772385",
+    emailCtaMenorEdad: "mabrilhnl@gmail.com", codeCtaMenorEdad: "842747",
+    emailfatcaPep: "mabrilhnl@gmail.com", codefatcaPep: "842747",
     emailCtaMultititular0: "multititularcrs@yopmail.com", codeCtaMultititular00: "985745",
     emailCtaMultititular1: "multititularcrs4@yopmail.com", codeCtaMultititular01: "483387",
-    emailCtaSimplificada: "ctaSimplificada03@yopmail.com", codeCtasimplificada: "997924",
-    emailCtaMenorEdad: "mabrilhnl@gmail.com", codeCtaMenorEdad: "799587",
     nombres: "MARIA CARMEN",
     nombre2: " OMAIRA",
     apellidos: "DE LA TORRE ",

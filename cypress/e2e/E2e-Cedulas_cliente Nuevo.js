@@ -73,6 +73,169 @@ export function FLUJOSCOMPLETOS(e2e) {
       );
     });
 
+    it("Cuenta Ahorro FATCA - CRS - PEP - FAMPEP", () => {
+      cy.fixture("index").then((index) => {
+        cy.screenshot("E2E/main.png");
+        cy.get("[data-test=comencemos_btn]").should("be.visible").click();
+
+        //Pantalla de loguin
+        cy.wait(10000);
+        cy.get("[data-test=insertar-correo]").should("be.visible").click();
+        cy.get("[data-test=insertar-correo]")
+          .should("be.visible")
+          .type(e2e.datosUsuario.emailfatcaPep);
+        cy.get("[data-test=insertar-ccdigo]").should("be.visible").click();
+        cy.get("[data-test=insertar-ccdigo]")
+          .should("be.visible")
+          .type(e2e.datosUsuario.codefatcaPep);
+        cy.screenshot("E2E/loguin.png");
+        cy.get('[data-test="enviar-correo-electronico"]').click();
+        cy.get('[data-test="es-correcto-email"]').click();
+        cy.wait("@Sessionid", { timeout: 60000 })
+          .then((xhr) => {
+            expect(xhr.status).to.eq(200);
+            expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+            expect(xhr.responseBody.OnboardingEmailData.code).to.eq("Ok");
+            const token = xhr.responseBody.OnboardingEmailData.token;
+            return token;
+          })
+          .as("token");
+        cy.wait("@wsconsultparameters", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(
+            xhr.responseBody.OnboardingParametersData.data.documenttyped
+          ).to.eq("CUENTA DE AHORRO");
+        });
+        cy.get("@token").then((token2) => {
+          const decoded = jwt_decode(token2);
+          const fase = decoded.phase;
+          switch (fase) {
+            case "1":
+              cy.Preguntas_Regulatorias_si();
+              cy.FATCA();
+              cy.CRS();
+              cy.PEP();
+              cy.FAMPEP();
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "1.1":
+              cy.FATCA();
+              cy.CRS();
+              cy.PEP();
+              cy.FAMPEP();
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "1.2":
+              cy.CRS();
+              cy.PEP();
+              cy.FAMPEP();
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "1.3":
+              cy.PEP();
+              cy.FAMPEP();
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "1.4":
+              cy.FAMPEP();
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "3":
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "3.1":
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "4":
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "5":
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "6":
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "7":
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "7.1":
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "8":
+              cy.Beneficiarios(e2e);
+              break;
+            default:
+              cy.log("No se encuentra la fase");
+              break;
+          }
+        });
+      });
+    });
+
     it("Cuenta Menor de edad", () => {
       cy.fixture("index").then((index) => {
         //Pantalla de INICIO
@@ -279,169 +442,6 @@ export function FLUJOSCOMPLETOS(e2e) {
               break;
             case "7":
               cy.Declaracion_Jurada_simplificada(e2e);
-              break;
-            default:
-              cy.log("No se encuentra la fase");
-              break;
-          }
-        });
-      });
-    });
-
-    it("Cuenta Ahorro FATCA - CRS - PEP - FAMPEP", () => {
-      cy.fixture("index").then((index) => {
-        cy.screenshot("E2E/main.png");
-        cy.get("[data-test=comencemos_btn]").should("be.visible").click();
-
-        //Pantalla de loguin
-        cy.wait(10000);
-        cy.get("[data-test=insertar-correo]").should("be.visible").click();
-        cy.get("[data-test=insertar-correo]")
-          .should("be.visible")
-          .type(e2e.datosUsuario.emailCtaAhorro);
-        cy.get("[data-test=insertar-ccdigo]").should("be.visible").click();
-        cy.get("[data-test=insertar-ccdigo]")
-          .should("be.visible")
-          .type(e2e.datosUsuario.codeCtaAhorro);
-        cy.screenshot("E2E/loguin.png");
-        cy.get('[data-test="enviar-correo-electronico"]').click();
-        cy.get('[data-test="es-correcto-email"]').click();
-        cy.wait("@Sessionid", { timeout: 60000 })
-          .then((xhr) => {
-            expect(xhr.status).to.eq(200);
-            expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-            expect(xhr.responseBody.OnboardingEmailData.code).to.eq("Ok");
-            const token = xhr.responseBody.OnboardingEmailData.token;
-            return token;
-          })
-          .as("token");
-        cy.wait("@wsconsultparameters", { timeout: 60000 }).then((xhr) => {
-          expect(xhr.status).to.eq(200);
-          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
-          expect(
-            xhr.responseBody.OnboardingParametersData.data.documenttyped
-          ).to.eq("CUENTA DE AHORRO");
-        });
-        cy.get("@token").then((token2) => {
-          const decoded = jwt_decode(token2);
-          const fase = decoded.phase;
-          switch (fase) {
-            case "1":
-              cy.Preguntas_Regulatorias_si();
-              cy.FATCA();
-              cy.CRS();
-              cy.PEP();
-              cy.FAMPEP();
-              cy.Ocr_cn(e2e);
-              cy.Apptividad();
-              cy.Biometria();
-              cy.Direccion_cn(e2e);
-              cy.TDD();
-              cy.Declaracion_Jurada(e2e);
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "1.1":
-              cy.FATCA();
-              cy.CRS();
-              cy.PEP();
-              cy.FAMPEP();
-              cy.Ocr_cn(e2e);
-              cy.Apptividad();
-              cy.Biometria();
-              cy.Direccion_cn(e2e);
-              cy.TDD();
-              cy.Declaracion_Jurada(e2e);
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "1.2":
-              cy.CRS();
-              cy.PEP();
-              cy.FAMPEP();
-              cy.Ocr_cn(e2e);
-              cy.Apptividad();
-              cy.Biometria();
-              cy.Direccion_cn(e2e);
-              cy.TDD();
-              cy.Declaracion_Jurada(e2e);
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "1.3":
-              cy.PEP();
-              cy.FAMPEP();
-              cy.Ocr_cn(e2e);
-              cy.Apptividad();
-              cy.Biometria();
-              cy.Direccion_cn(e2e);
-              cy.TDD();
-              cy.Declaracion_Jurada(e2e);
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "1.4":
-              cy.FAMPEP();
-              cy.Ocr_cn(e2e);
-              cy.Apptividad();
-              cy.Biometria();
-              cy.Direccion_cn(e2e);
-              cy.TDD();
-              cy.Declaracion_Jurada(e2e);
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "3":
-              cy.Ocr_cn(e2e);
-              cy.Apptividad();
-              cy.Biometria();
-              cy.Direccion_cn(e2e);
-              cy.TDD();
-              cy.Declaracion_Jurada(e2e);
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "3.1":
-              cy.Apptividad();
-              cy.Biometria();
-              cy.Direccion_cn(e2e);
-              cy.TDD();
-              cy.Declaracion_Jurada(e2e);
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "4":
-              cy.Biometria();
-              cy.Direccion_cn(e2e);
-              cy.TDD();
-              cy.Declaracion_Jurada(e2e);
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "5":
-              cy.Direccion_cn(e2e);
-              cy.TDD();
-              cy.Declaracion_Jurada(e2e);
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "6":
-              cy.TDD();
-              cy.Declaracion_Jurada(e2e);
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "7":
-              cy.Declaracion_Jurada(e2e);
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "7.1":
-              cy.Carga_documentos();
-              cy.Beneficiarios(e2e);
-              break;
-            case "8":
-              cy.Beneficiarios(e2e);
               break;
             default:
               cy.log("No se encuentra la fase");
@@ -872,6 +872,169 @@ export function FLUJOSCOMPLETOS(e2e) {
               break;
             case "7.1":
               cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "8":
+              cy.Beneficiarios(e2e);
+              break;
+            default:
+              cy.log("No se encuentra la fase");
+              break;
+          }
+        });
+      });
+    });
+
+    it("Cuenta Ahorro FATCA - CRS - PEP - FAMPEP", () => {
+      cy.fixture("index").then((index) => {
+        cy.screenshot("E2E/main.png");
+        cy.get("[data-test=comencemos_btn]").should("be.visible").click();
+
+        //Pantalla de loguin
+        cy.wait(10000);
+        cy.get("[data-test=insertar-correo]").should("be.visible").click();
+        cy.get("[data-test=insertar-correo]")
+          .should("be.visible")
+          .type(e2e.datosUsuario.emailfatcaPep);
+        cy.get("[data-test=insertar-ccdigo]").should("be.visible").click();
+        cy.get("[data-test=insertar-ccdigo]")
+          .should("be.visible")
+          .type(e2e.datosUsuario.codefatcaPep);
+        cy.screenshot("E2E/loguin.png");
+        cy.get('[data-test="enviar-correo-electronico"]').click();
+        cy.get('[data-test="es-correcto-email"]').click();
+        cy.wait("@Sessionid", { timeout: 60000 })
+          .then((xhr) => {
+            expect(xhr.status).to.eq(200);
+            expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+            expect(xhr.responseBody.OnboardingEmailData.code).to.eq("Ok");
+            const token = xhr.responseBody.OnboardingEmailData.token;
+            return token;
+          })
+          .as("token");
+        cy.wait("@wsconsultparameters", { timeout: 60000 }).then((xhr) => {
+          expect(xhr.status).to.eq(200);
+          expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+          expect(
+            xhr.responseBody.OnboardingParametersData.data.documenttyped
+          ).to.eq("CUENTA DE AHORRO");
+        });
+        cy.get("@token").then((token2) => {
+          const decoded = jwt_decode(token2);
+          const fase = decoded.phase;
+          switch (fase) {
+            case "1":
+              cy.Preguntas_Regulatorias_si();
+              cy.FATCA();
+              cy.CRS();
+              cy.PEP();
+              cy.FAMPEP();
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "1.1":
+              cy.FATCA();
+              cy.CRS();
+              cy.PEP();
+              cy.FAMPEP();
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "1.2":
+              cy.CRS();
+              cy.PEP();
+              cy.FAMPEP();
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "1.3":
+              cy.PEP();
+              cy.FAMPEP();
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "1.4":
+              cy.FAMPEP();
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "3":
+              cy.Ocr_cn(e2e);
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "3.1":
+              cy.Apptividad();
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "4":
+              cy.Biometria();
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "5":
+              cy.Direccion_cn(e2e);
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "6":
+              cy.TDD();
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "7":
+              cy.Declaracion_Jurada(e2e);
+              cy.Carga_documentos();
+              cy.Beneficiarios(e2e);
+              break;
+            case "7.1":
               cy.Carga_documentos();
               cy.Beneficiarios(e2e);
               break;
