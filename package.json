@@ -1,0 +1,30 @@
+{
+  "name": "onboardingjuridico",
+  "version": "1.0.0",
+  "description": "Proyecto de Automatizacion para la celula de Banesco Onboarding Internacional ",
+  "main": "index.js",
+  "scripts": {
+    "runcypress": "npx cypress run",
+    "cypress": "npx cypress open"
+  },
+  "keywords": [
+    "QA",
+    "Automatizacion"
+  ],
+  "author": "Mabril",
+  "license": "ISC",
+  "dependencies": {
+    "cypress-msal-login": "^1.0.5",
+    "jwt-decode": "^3.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Michaelabril/Automatizacion-Cypress"
+  },
+  "devDependencies": {
+    "cypress": "^10.9.0",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-xpath": "^1.6.2",
+    "xpath": "0.0.32"
+  }
+}
