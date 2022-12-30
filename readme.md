@@ -19,5 +19,5 @@ El proyecto consta de una serie de procesos en el cual se debe tomar en cuenta q
 ### Nota: se debe utilizar un convertidor de arhivos .y4m para los procesos de captura de imagenes
 
 ## Author: 
-* **Michael Abril:** Trabajo Inicial y Documentacion.
+* **Michael Abril:** Trabajo Inicial de desarrollo y Documentacion.
 * **Alfredo Pinzon:** Apoyo en desarrollo de funcionalidades.
