@@ -571,6 +571,96 @@ Cypress.Commands.add("Declaracion_Jurada", (data_declaracionJurada) => {
   });
 });
 
+Cypress.Commands.add("Declaracion_Jurada_multititular_secundario", (data_declaracionJurada) => {
+  cy.wait(10000);
+  cy.wait("@negocios", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(xhr.responseBody.OnboardingTypeOfBusinessMessage.code).to.eq(200);
+    expect(xhr.responseBody.OnboardingTypeOfBusinessMessage.message).to.eq(
+      "Ok"
+    );
+  });
+  cy.wait("@profesion", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(xhr.responseBody.OnboardingProfessionMessage.code).to.eq(200);
+    expect(xhr.responseBody.OnboardingProfessionMessage.message).to.eq("Ok");
+  });
+  cy.wait("@empleados", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(xhr.responseBody.OnboardingEmploymentSituationMessage.code).to.eq(
+      200
+    );
+    expect(xhr.responseBody.OnboardingEmploymentSituationMessage.message).to.eq(
+      "Ok"
+    );
+  });
+  cy.wait("@estadoCivil", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(xhr.responseBody.OnboardingCivilStatusMessage.code).to.eq(200);
+    expect(xhr.responseBody.OnboardingCivilStatusMessage.message).to.eq("Ok");
+  });
+  cy.wait("@paisestransferencia", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.message).to.eq("Ok");
+  });
+  cy.wait("@empleados", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(
+      xhr.responseBody.OnboardingConsultInsuranceData.ServiceResponse
+    ).to.eq(true);
+  });
+  cy.wait("@perfiltransaccional", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.message).to.eq("Ok");
+  });
+  // Pantalla de DECLARACION JURADA
+  cy.wait(10000);
+  cy.get("[data-test=situacion-laboral-select]")
+    .should("be.visible")
+    .select("ASALARIADO");
+  cy.get("[data-test=tipo-negocio-select]")
+    .should("be.visible")
+    .select("ADMINISTRACION");
+  cy.get("[data-test=ocupacion-select]")
+    .should("be.visible")
+    .select("ADMINISTRADOR");
+  cy.get("[data-test=salario-input]")
+    .should("be.visible")
+    .type(data_declaracionJurada.declaracion.salario);
+  cy.get("[data-test=text-otros-ingresos]")
+    .should("be.visible")
+    .type(data_declaracionJurada.declaracion.descripcionOtrosIngresos);
+  cy.get("[data-test=monto-otros-ingresos]")
+    .should("be.visible")
+    .type(data_declaracionJurada.declaracion.montoOtrosIngresos);
+  cy.get("[data-test=monto_apertura-input]")
+    .should("be.visible")
+    .type(data_declaracionJurada.declaracion.montoApertura);
+  cy.get("[data-test=origen_fondos-select]")
+    .should("be.visible")
+    .select("FONDOS PROPIOS");
+  cy.get("[data-test=estado-civil-select]")
+    .should("be.visible")
+    .select("SOLTERO(A)");
+  cy.screenshot("E2E/D_Jurada");
+  cy.get("[data-test=generar-contrato-btn]").should("be.visible").click();
+  cy.wait("@actualizarprospect", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.message).to.eq("Ok");
+    expect(xhr.responseBody.OnboardingProspectData.isRisk).to.eq(false);
+    expect(xhr.responseBody.OnboardingProspectData.prospectSave).to.eq(true);
+    expect(xhr.responseBody.OnboardingProspectData.serviceResponse).to.eq(true);
+  });
+});
+
 Cypress.Commands.add("Declaracion_Jurada_menor", (data_declaracionJurada) => {
   // Pantalla de DECLARACION JURADA
   cy.wait(10000);
@@ -725,6 +815,56 @@ Cypress.Commands.add("Carga_documentos", () => {
       true
     );
   });
+});
+
+Cypress.Commands.add("Carga_documentos_multititular", () => {
+  //Carga de documentos
+  cy.wait(10000);
+  cy.get(".col-lg-9 > .container-fluid > :nth-child(1)").contains(
+    "Antes de continuar, necesito que nos proporciones los siguientes datos que completarán la prueba de tus ingresos"
+  );
+  const CTRABAJO = "ctrabajo.pdf";
+  const DRENTA = "drenta.pdf";
+  const EFINANCIERO = "efinanciero.pdf";
+  const CINGRESOS = "cingresos2.jpg";
+  const FIRMA = "firma.jpg";
+  cy.get("#file").attachFile(CTRABAJO);
+  cy.get("#file").attachFile(DRENTA);
+  cy.get("#file").attachFile(EFINANCIERO);
+  cy.get("#file").attachFile(CINGRESOS);
+  cy.get("#file2").attachFile(FIRMA);
+  cy.screenshot("E2E/C_documentos_DJ");
+  cy.get('[data-test="generar-contrato-btn"]').should("be.visible").click();
+  cy.wait("@guardarimagenes", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.message).to.eq("OK");
+    expect(xhr.responseBody.OnboardingGetImagesData.serviceResponse).to.eq(
+      true
+    );
+  });
+  cy.wait("@mostrarContracto", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.message).to.eq("Ok.");
+  });
+  cy.wait(10000);
+  cy.screenshot("E2E/Contrato");
+  cy.get('[data-test="acepto-contrato"]').click();
+  cy.wait("@aceptarContracto", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(xhr.responseBody.OnboardingConfirmData.serviceResponse).to.eq(true);
+  });
+  cy.wait("@registrarpendiente", { timeout: 60000 }).then((xhr) => {
+    expect(xhr.status).to.eq(200);
+    expect(xhr.responseBody.HttpResponse.code).to.eq(200);
+    expect(
+      xhr.responseBody.OnboardingRegisterPendingData.serviceResponse
+    ).to.eq(true);
+  });
+  cy.screenshot("E2E/Pan_finalizado");
+  
 });
 
 Cypress.Commands.add("Carga_documentos_menor", () => {
